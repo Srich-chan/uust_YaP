@@ -13,6 +13,9 @@ typedef struct {
     pos a;
     pos d;
 } rect;
+// a----.
+// |    |
+// '----d
 typedef struct {
     pos C;
     num R;
