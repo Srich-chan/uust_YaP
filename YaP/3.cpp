@@ -2,27 +2,41 @@
 #include <cmath>
 
 
-float F () {
-
-}
-
-
-int main(int* args, char* wtf) {
+int main() {
     float a, b, c;
     int Xs, Xe, dX;
 
     printf("\na = ");scanf("%f", &a);
-    printf("\nb = ");scanf("%f", &b);
-    printf("\nc = ");scanf("%f", &c);
+    printf("b = ");scanf("%f", &b);
+    printf("c = ");scanf("%f", &c);
 
-    printf("\nStart (Xs) = ");scanf("%d", &Xs);
-    printf("\nEnd = ");scanf("%d", &Xe);
-    printf("\nStep = ");scanf("%d", &dX);
-    printf("\n");
+    if (c == 0)
+        return 1;
 
-    bool A = (a || b) ^ (b && c);
+    printf("Start (Xs) = ");scanf("%d", &Xs);
+    printf("End (Xe) = ");    scanf("%d", &Xe);
+    printf("Step (dX) = ");   scanf("%d", &dX);
 
+    const bool A = (((int)a | (int)b) ^ ((int)b & (int)c)) == 0;
+    float res;
+    int liner = 0;
     for (;Xs <= Xe; Xs += dX) {
 
+        if (Xs < 1 && Xs - b != 0)
+            res = a * Xs * Xs + b;
+        else if (Xs > 1 && Xs + b == 0)
+            res = (Xs - a) / Xs;
+        else
+            res = Xs / c;
+
+        if (liner++ % 10 == 0)  printf("\n");
+        else                    printf("\t");
+
+        if (A)
+            printf("%d", (int)res);
+        else
+            printf("%f", res);
+
     }
+    _sleep(10000);
 }

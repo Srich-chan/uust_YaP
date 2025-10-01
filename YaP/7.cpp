@@ -1,10 +1,13 @@
 #include <cstdio>
 
 int main() {
-    int n, curr;
-    printf("\nn = ");
-    scanf("%d", &n);
-//    int _matrix[n][n];
+//    int n, curr;
+//    printf("\nn = ");
+//    scanf("%d", &n);
+
+    for ()
+
+    int _matrix[n][n];
 
     for (int i=0; i < n; ++i) {
         printf("%d.\t", i + 1);
