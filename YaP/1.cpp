@@ -7,17 +7,23 @@ double ctg (double x) {
 
 
 int main() {
-    float alpha;
+    double alpha;
     printf("\nalpha = ");
-    scanf("%f", &alpha);
+    scanf("%Lf", &alpha);
     const double PI = 3.14159;  // ...
 
-    double z1 = sin(4 * alpha) / (1 + cos(4 * alpha)) * cos (2 * alpha) / (1 + cos(2 * alpha));
-    double z2 = ctg(1.5 * PI - alpha);
+    if (((int) alpha) % )
+
+    if ()
+
+    double z1 = sin(4 * alpha) /
+            (1 + cos(4 * alpha)) * cos (2 * alpha) /
+                                    (1 + cos(2 * alpha));
+    double z2 = ctg(1.5 * PI - alpha) * (8 / 9);
 
     printf("Z1 = %f", z1);
     printf("\nZ2 = %f", z2);
 
-    _sleep(10000);
+    // _sleep(10000);
 
 }

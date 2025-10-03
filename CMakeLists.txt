@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(
         main_cmake
-#        main.cpp
+        #        main.cpp
 #        testo.cpp
 #        Ent.h
 #        cm_math.cpp
@@ -15,4 +15,8 @@ add_executable(
 #        YaP/3.cpp
         YaP/4.cpp
 #        YaP/6.cpp
+#        YaP/7.cpp
+#        "YaP/_7#.cpp"
+#/        YaP/8.cpp
+
 )

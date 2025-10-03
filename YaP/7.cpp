@@ -1,23 +1,16 @@
 #include <cstdio>
+#include <cstdlib>
+#include <ctime>
 
 int main() {
-//    int n, curr;
-//    printf("\nn = ");
-//    scanf("%d", &n);
+        // srand(static_cast<unsigned int>(time(nullptr)));
+    // null terminated input
+    printf("\nEnter the size of array: ");
+    typedef unsigned short num;
 
-    for ()
+    num n;
+    scanf("%d", &n);
+    printf("%u", n);
 
-    int _matrix[n][n];
-
-    for (int i=0; i < n; ++i) {
-        printf("%d.\t", i + 1);
-        for (int j = 0; j < n; ++j) {
-            curr = j - i + 1;
-            if (curr < 0) curr = 0;
-
-            printf(" %x", curr);
-//            _matrix[i][j] = curr;
-        }
-        printf("\n");
-    }
+    // n n n
 }

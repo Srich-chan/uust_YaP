@@ -2,7 +2,7 @@
 #include <cmath>
 
 
-typedef float num;
+typedef const float num;
 //typedef num pos[2];
 typedef struct {
     num x;
@@ -38,7 +38,7 @@ bool in_circle(pos p) {
 }
 
 bool in_rects(pos p) {
-    for (auto& rect : rects)
+    for (rect& rect : rects)
         if (
             rect.a.x <= p.x && rect.d.x >= p.x &&
             rect.a.y >= p.y && rect.d.y <= p.y
@@ -46,6 +46,7 @@ bool in_rects(pos p) {
             return true;
     return false;
 }
+
 int main() {
     float x, y;
     printf("\nx = ");
@@ -57,5 +58,4 @@ int main() {
     if (in_circle(p) ^ in_rects(p))
          printf("true");
     else printf("false");
-
 }

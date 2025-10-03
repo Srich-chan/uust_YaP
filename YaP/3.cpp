@@ -38,5 +38,4 @@ int main() {
             printf("%f", res);
 
     }
-    _sleep(10000);
 }
