@@ -12,9 +12,7 @@ int main() {
     scanf("%Lf", &alpha);
     const double PI = 3.14159;  // ...
 
-    if (((int) alpha) % )
-
-    if ()
+    if (cos(alpha) == 0) return 1;
 
     double z1 = sin(4 * alpha) /
             (1 + cos(4 * alpha)) * cos (2 * alpha) /
