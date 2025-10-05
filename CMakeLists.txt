@@ -13,9 +13,9 @@ add_executable(
 #        YaP/1.cpp
 #        YaP/2.cpp
 #        YaP/3.cpp
-        YaP/4.cpp
+#        YaP/4.cpp
 #        YaP/6.cpp
-#        YaP/7.cpp
+        YaP/7.cpp
 #        "YaP/_7#.cpp"
 #/        YaP/8.cpp
 
