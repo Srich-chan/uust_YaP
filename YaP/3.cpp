@@ -30,7 +30,7 @@ int main() {
             res = Xs / c;
 
         if (liner++ % 10 == 0)  printf("\n");
-        else                    printf("\t");
+        else                    printf("\t");r
 
         if (A)
             printf("%d", (int)res);
