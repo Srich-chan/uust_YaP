@@ -3,29 +3,31 @@
 unsigned const MAX_STR_SIZE = 100;
 
 char str[MAX_STR_SIZE];
+char res[MAX_STR_SIZE];
 unsigned i=0;
+unsigned j;
+
+unsigned size(const char str[]) {
+    unsigned c=0;
+    for (; str[c] != '\0'; ++c);
+    return c;
+}
 
 
-bool is_it() {
-    return (str[i] == 'b' || str[i] == 'B') && str[++i] == '>');
+bool is_it(unsigned c) {
+    return (str[c] == 'b' || str[c] == 'B') && str[++c] == '>';
 }
 
 
 int main () {
+    // only ASCII without spaces
     scanf("%s", &str);
-
-    unsigned size=0;
-    while (str[size] != NULL)
-
-    while (str[i] != NULL) {
-        if (str[i] == '<') {
-            if (str[++i] == '/') {
-                ++i;
-                if (is_it())
-            }
-            else if (is_it()) {
-
-            }
-        } else ++i;
+    unsigned s = size(str);
+    
+    
+    while (i < s) {
+        j = i;
+        res[i] = str[i];
+        
     }
 }

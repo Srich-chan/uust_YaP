@@ -10,6 +10,7 @@ double pow (double a, int b) {
 
 int main() {
     int n = 1000;
+
     double x;
     printf("x = "); scanf("%lf", &x);
 

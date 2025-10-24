@@ -23,6 +23,5 @@ int main() {
     printf("Z1 = %f", z1);
     printf("\nZ2 = %f", z2);
 
-    // _sleep(10000);
 
 }
