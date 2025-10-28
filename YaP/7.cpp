@@ -1,29 +1,24 @@
-#include <iostream>
+#include <cstdio>
 #include <cmath>
 
-using std::cout, std::cin;
-
-int trash_func(int n) {
-    int i=2;
-    for (; (i * i - i / 2) < n; ++i);
-    return i;
-}
 
 int main () {
-    int n;
-    cin >> n;
+    int ms; scanf("%d" , &ms);
 
-    if (n > 100 || n < 1) { cout << "hren\n";}
-    int m = trash_func(n);
-    int A[m][m];
+    int n = 1;
+    while ((n * n - n) / 2 + n != ms) ++n;
 
-    for (int i=0; i < n; ++i) {
-       //potom
+    int A[n][n];
+    int col;
+
+    int x, y;
+    for (int i=0; i < ms; ++i) {
+        x = i / n;
+        y = i % n;
+        scanf("%d", &A[x][y]);
+        if (x != y) A[y][x] = A[x][y];
     }
 
-
-
-
-
+    // TODO: Output
 
 }

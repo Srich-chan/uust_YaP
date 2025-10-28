@@ -1,15 +1,8 @@
 #include <cstdio>
 #include <cmath>
 
-double r;
-double pow (double a, int b) {
-    r = a;
-    for (; 1 < b; --b) r *= a;
-    return r;
-}
-
+const double EPS = 0.000001;
 int main() {
-    int n = 1000;
 
     double x;
     printf("x = "); scanf("%lf", &x);
@@ -17,11 +10,16 @@ int main() {
     if (1 >= fabs(x)) return 504;
 
     double res = 0;
-    int _n;
-    while (0 <= n) {
-        _n = 2 * n-- + 1;
-        res += 1 / (_n * pow(x, _n));
-    }
+    double curr;
+    const double a = x;
+    int n = 1;
+
+    do{
+        curr = 1 / (n * x);
+        x *= a*a;
+        ++++n;
+        res += curr;
+    } while (fabs(curr) >= EPS) ;
 
     printf("arcth x = %1.16f", res);
 }
