@@ -12,8 +12,10 @@ int main() {
 
         for (int j = 0; j < n; ++j) {
             curr = j - i + 1;
-            if (curr < 0) {curr = 0;}
+            if (curr < 0) curr = 0;
             else
+            // Код не оптимизирован, индивидуальная проверка на размер проходит на кажды эл
+            // TODO: шаговая проверка
             for (spaces = s - (int)log10(curr) + 1; spaces > 0; --spaces) printf(" ");
 
             printf("%d", curr);
