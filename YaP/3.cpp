@@ -3,23 +3,23 @@
 
 
 int main() {
-    float a, b, c;
-    int Xs, Xe, dX;
+    float a, b, c, Xs, Xe, dX;
 
     printf("\na = ");scanf("%f", &a);
     printf("b = ");scanf("%f", &b);
     printf("c = ");scanf("%f", &c);
 
+    const bool A = (((int)a | (int)b) ^ ((int)b & (int)c)) == 0;
+    printf("(((int)a | (int)b) ^ ((int)b & (int)c)) = ");
+    if (A) printf("True"); else printf("False");
+
     if (c == 0)
         return 1;
 
-    printf("Start (Xs) = ");scanf("%d", &Xs);
-    printf("End (Xe) = ");    scanf("%d", &Xe);
-    printf("Step (dX) = ");   scanf("%d", &dX);
-
-    const bool A = (((int)a | (int)b) ^ ((int)b & (int)c)) == 0;
+    printf("\n\nStart (Xs) = ");scanf("%f", &Xs);
+    printf("End (Xe) = ");    scanf("%f", &Xe);
+    printf("Step (dX) = ");   scanf("%f", &dX);
     float res;
-    int liner = 0;
     for (;Xs <= Xe; Xs += dX) {
 
         if (Xs < 1 && Xs - b != 0)
@@ -29,13 +29,10 @@ int main() {
         else
             res = Xs / c;
 
-        if (liner++ % 10 == 0)  printf("\n");
-        else                    printf("\t");
-
         if (A)
-            printf("%d", (int)res);
+            printf("\nx=%.2f,\tF=%d", Xs, (int)res);
         else
-            printf("%f", res);
+            printf("\nx=%.2f,\tF=%.2f", Xs, res);
 
     }
 }

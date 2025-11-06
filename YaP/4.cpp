@@ -7,14 +7,14 @@ int main() {
     double x;
     printf("x = "); scanf("%lf", &x);
 
-    if (1 >= fabs(x)) return 504;
+    if (1 >= fabs(x)) return 228;
 
     double res = 0;
     double curr;
     const double a = x;
     int n = 1;
 
-    do{
+    do {
         curr = 1 / (n * x);
         x *= a*a;
         ++++n;
