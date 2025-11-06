@@ -1,12 +1,9 @@
 #include <cstdio>
 #include <cmath>
 
-const double EPS = 0.0000001;
 double x;
 
 int main() {
-
-
     printf("x = "); scanf("%lf", &x);
 
     if (1 >= fabs(x)) {
@@ -14,6 +11,7 @@ int main() {
         return 1;
     }
 
+    const double EPS = 0.000000000001;
     double l = x;
     double curr;
     double res = 0;
@@ -27,8 +25,6 @@ int main() {
     } while (fabs(curr) > EPS);
 
 
-    printf("arcth x = %1.16f", res);
+    printf("arcth x = %lf", res);
 }
 
-// 2.6516524540295374 при встройке
-// 2.6516524540295374 при моей + 1.5 секунды
