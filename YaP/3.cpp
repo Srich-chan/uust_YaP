@@ -30,9 +30,9 @@ int main() {
             res = Xs / c;
 
         if (A)
-            printf("\nx=%.2f,\tF=%d", Xs, (int)res);
+            printf("\nx=%.2f\tF=%d", Xs, (int)res);
         else
-            printf("\nx=%.2f,\tF=%.2f", Xs, res);
+            printf("\nx=%.2f\tF=%.2f", Xs, res);
 
     }
 }
