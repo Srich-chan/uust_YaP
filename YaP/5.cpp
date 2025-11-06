@@ -1,15 +1,28 @@
 #include <cstdio>
 
+typedef unsigned long long num;
+
 int main() {
-    unsigned n; printf("\nn = "); scanf("%u", &n);
-    unsigned long int S = 0;
-    unsigned long int t;
-    unsigned j;
-    for (int i=1; i <= n; ++i) {
+    num n; printf("\nn = "); scanf("%llu", &n);
+    num S = 0;
+    num prev;
+    num t;
+
+    if (n == 0) return -123;
+
+    for (num i=1; i <= n; ++i) {
         t = 1;
-        for (j=i; j <= 2 * i; ++j)
+        for (num j=i; j <= 2 * i; ++j)
             t *= j;
+
+        prev = S;
         S += t;
+        if (prev > S) {
+            printf("\nS overflow");
+            S = -1;
+            break;
+        }
     }
-    printf("result = %lu", S);
+
+    printf("\nresult = %llu", S);
 }

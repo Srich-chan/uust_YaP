@@ -19,20 +19,29 @@ int main() {
     printf("\n\nStart (Xs) = ");scanf("%f", &Xs);
     printf("End (Xe) = ");    scanf("%f", &Xe);
     printf("Step (dX) = ");   scanf("%f", &dX);
-    float res;
-    for (;Xs <= Xe; Xs += dX) {
 
-        if (Xs < 1 && Xs - b != 0)
+    int var;
+    float res;
+    while (Xs <= Xe) {
+
+        if (Xs < 1 && Xs - b != 0) {
+            var = 1;
             res = a * Xs * Xs + b;
-        else if (Xs > 1 && Xs + b == 0)
+        }
+        else if (Xs > 1 && Xs + b == 0) {
+            var = 2;
             res = (Xs - a) / Xs;
-        else
+        }
+        else {
+            var = 3;
             res = Xs / c;
+        }
 
         if (A)
-            printf("\nx=%.2f\tF=%d", Xs, (int)res);
+            printf("\nx=%.2f   \tF=%d   \t%d", Xs, (int)res, var);
         else
-            printf("\nx=%.2f\tF=%.2f", Xs, res);
+            printf("\nx=%.2f   \tF=%.3f   \t%d", Xs, res, var);
 
+        Xs += dX;
     }
 }
