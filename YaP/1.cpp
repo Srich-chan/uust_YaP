@@ -9,15 +9,15 @@ int main() {
     double alpha;
     printf("\nalpha = ");
     scanf("%lf", &alpha);
-    const double eps = 0.5;
+    const double eps = 0.001;
 
-    alpha *= M_PI / 180;
+    alpha *= 1.0 / 180 * M_PI;
 
     double c1 = cos(alpha * 4), c2 = cos(alpha * 2);
     if (c1 < eps - 1 |
         c2 < eps - 1 |
         alpha == 1.5 * M_PI) {
-        printf("!!!: Uncorrect!\n");
+        printf("Error: Zero Division\n");
         return -1;
     }
 
