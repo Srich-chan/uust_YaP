@@ -1,8 +1,5 @@
-//
-// Created by ы on 23.09.2025.
-//
+#include <iostream>
 
-#include "testo.h"
-
-namespace testt {
-} // testt
+int main() {
+    for (int i=0; i < 10; ++i) std::cout << i << ". " << (char)(i  + 48)<< "\n";
+}

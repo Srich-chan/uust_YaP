@@ -2,8 +2,10 @@
 #include <cmath>
 #include <ctime>
 
-const bool generate = 1;
+// todo: Переделать
 
+const bool generate = 1;
+const int MAX = 100;
 
 int s;
 int main () {
@@ -15,7 +17,7 @@ int main () {
 
     int max = std::numeric_limits<int>::min();
 
-    if (generate) srand(static_cast<signed int>(time(0)));
+    if (generate) srand(static_cast<unsigned int>(time(0)));
 
     for (int i=0; i < n; ++i) {
         for (int j=i; j < n; ++j) {
@@ -26,25 +28,28 @@ int main () {
                 opos = 0;
             } else {
                 if (generate) {
-                    curr = rand();
+                    curr = rand() % MAX;
                 } else {
                     scanf("%d", &curr);
                 }
 
                 opos = curr;
-                if (max < curr) max = curr;
+                if (fabs(max) < fabs(curr)) max = curr;
                 --ms;
             }
         }
     }
 
     // DO: GOVNO
-    if (max != 0) s = (int)log10(max) + 1;
+    if (!generate)
+    if (max != 0) s = (int)log10(max) + 1 + (max < 0);
     else s = 1;
+    else s = (int)log10(MAX) + 1 ? :
 
     auto m = [](int a) -> int {
         if (a == 0) return ::s;
-        return ::s - int(log10(a));
+
+        return ::s - int(log10(fabs(a))) + (a < 0);
     };
 
     for (auto& i : A) {
