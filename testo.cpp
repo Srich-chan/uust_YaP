@@ -1,5 +1,13 @@
 #include <iostream>
 
+void change (int& a) {
+    a = 'x';
+}
+
+using std::cout;
+
 int main() {
-    for (int i=0; i < 10; ++i) std::cout << i << ". " << (char)(i  + 48)<< "\n";
+    int kek = 5;
+    change(kek);
+    cout << (char)kek;
 }

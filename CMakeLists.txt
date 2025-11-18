@@ -8,7 +8,7 @@ add_executable(
         #        YaP/ya_olimp.cpp
 #                main.cpp
 #        YaP/main_lecture.cpp
-#        testo.cpp
+        testo.cpp
 #        Ent.h
 #        cm_math.cpp
 #        matrix_nxn.h
@@ -18,7 +18,7 @@ add_executable(
 #        YaP/3.cpp
 #        YaP/4.cpp
 #        YaP/5.cpp
-        YaP/6.cpp
+#        YaP/6.cpp
 #        YaP/7.cpp
 #        YaP/8.cpp
 #        "YaP/_7#.cpp"
