@@ -8,6 +8,7 @@ using std::cout;
 
 int main() {
     int kek = 5;
-    change(kek);
-    cout << (char)kek;
+
+
+
 }
