@@ -1,8 +1,14 @@
-//
-// Created by ы on 23.09.2025.
-//
+#include <iostream>
 
-#include "testo.h"
+void change (int& a) {
+    a = 'x';
+}
 
-namespace testt {
-} // testt
+using std::cout;
+
+int main() {
+    int kek = 5;
+
+
+
+}

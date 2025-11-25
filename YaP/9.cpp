@@ -1,33 +1,44 @@
 #include <cstdio>
-
-unsigned const MAX_STR_SIZE = 100;
-
-char str[MAX_STR_SIZE];
-char res[MAX_STR_SIZE];
-unsigned i=0;
-unsigned j;
-
-unsigned size(const char str[]) {
-    unsigned c=0;
-    for (; str[c] != '\0'; ++c);
-    return c;
-}
+#include <cstring>
 
 
-bool is_it(unsigned c) {
-    return (str[c] == 'b' || str[c] == 'B') && str[++c] == '>';
-}
+// Buffero OverFlowus
+unsigned const size = 1024;
+
+char str[size], new_str[size], buffer[size];
+
+unsigned c, offset = 0;
+int i = 0;
 
 
-int main () {
-    // only ASCII without spaces
-    scanf("%s", &str);
-    unsigned s = size(str);
-    
-    
-    while (i < s) {
-        j = i;
-        res[i] = str[i];
-        
+char matchA[] = "BOLD>";
+char matchB[] = "END BOLD>";
+
+
+int main() {
+    puts("str:");
+    gets(str);
+
+    for (; i < strlen(str); ++i) {
+        new_str[i + offset] = str[i];
+
+        if (str[i] == '<') {
+            ++i;
+            if (str[i] == 'b' | str[i] == 'B') {
+                if (str[++i] == '>') {
+                    strcat(new_str, matchA);
+                    offset += strlen(matchA) - 2;
+                }
+            } else if (str[i] == '/') {
+                ++i;
+                if (str[i] == 'b' | str[i] == 'B')
+                    if (str[++i] == '>') {
+                    strcat(new_str, matchB);
+                    offset += strlen(matchB) - 2;
+                }
+            } else if (str[i] == '<') --i; else ----i;
+        }
     }
+    printf("%s", new_str);
+
 }

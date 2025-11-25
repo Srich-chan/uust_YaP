@@ -2,11 +2,15 @@
 #include <cmath>
 #include <ctime>
 
-const bool generate = 1;
+
+const int generate = 1;
 
 
-int s;
+const int MAX = 400;
+const int max_spaces = (int)log10(MAX) + 3;
+
 int main () {
+    printf("array size = ");
     int ms; scanf("%d" , &ms);
     int n = 1;
     while ((n * n - n) / 2 + n < ms) ++n;
@@ -15,7 +19,7 @@ int main () {
 
     int max = std::numeric_limits<int>::min();
 
-    if (generate) srand(static_cast<signed int>(time(0)));
+    if (generate) srand(static_cast<unsigned int>(time(0)));
 
     for (int i=0; i < n; ++i) {
         for (int j=i; j < n; ++j) {
@@ -26,34 +30,23 @@ int main () {
                 opos = 0;
             } else {
                 if (generate) {
-                    curr = rand();
+                    curr = (rand() % MAX) * (rand() % 2 ? -1 : 1);
                 } else {
                     scanf("%d", &curr);
                 }
-
                 opos = curr;
-                if (max < curr) max = curr;
+                if (fabs(max) < fabs(curr)) max = curr;
                 --ms;
             }
         }
     }
-
-    // DO: GOVNO
-    if (max != 0) s = (int)log10(max) + 1;
-    else s = 1;
-
-    auto m = [](int a) -> int {
-        if (a == 0) return ::s;
-        return ::s - int(log10(a));
-    };
+    char format[] = "%3d";
+    if (max_spaces > 3 && max_spaces < 10) format[1] = char(48 + max_spaces);
 
     for (auto& i : A) {
         for (int& j : i) {
-            for (int c=0; c < m(j); ++c) printf(" ");
-            printf(" %d", j);
+            printf(format, j);
         }
-        printf("\n");
+        puts("");
     }
-
-
 }
