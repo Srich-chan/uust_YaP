@@ -7,14 +7,17 @@ int main() {
 
     printf("\na = ");scanf("%f", &a);
     printf("b = ");scanf("%f", &b);
-    printf("c = ");scanf("%f", &c);
+
+    while (1) {
+        printf("c(not zero) = ");scanf("%f", &c);
+        if (c == 0) printf("NOT ZERO\n");
+        else break;
+    }
+
 
     const bool A = (((int)a | (int)b) ^ ((int)b & (int)c)) == 0;
-    printf("(((int)a | (int)b) ^ ((int)b & (int)c)) = ");
-    if (A) printf("True"); else printf("False");
-
-    if (c == 0)
-        return 1;
+    printf("(((int)a | (int)b) ^ ((int)b & (int)c)) = %s",
+        A ? "True" : "False");
 
     printf("\n\nStart (Xs) = ");scanf("%f", &Xs);
     printf("End (Xe) = ");    scanf("%f", &Xe);
@@ -22,22 +25,18 @@ int main() {
 
     int var;
     float res;
-    while (Xs <= Xe) {
+    printf("\n   X\t|\t    F   \t");////////////
+    for (; Xs <= Xe; Xs += dX) {
 
         if (Xs < 1 && Xs - b != 0) {
-            var = 1;
             res = a * Xs * Xs + b;
         } else if (Xs > 1 && Xs + b == 0) {
-            var = 2;
             res = (Xs - a) / Xs;
         } else {
-            var = 3;
             res = Xs / c;
         }
 
-        if (A) printf("\nx=%.2f   \tF=%d   \t%d", Xs, (int)res, var);
-        else   printf("\nx=%.2f   \tF=%.3f   \t%d", Xs, res, var);
-
-        Xs += dX;
+        if (A) printf("\n%.2f\t|\t %d", Xs, (int)res);
+        else   printf("\n%.2f\t|\t %.3f", Xs, res);
     }
 }
