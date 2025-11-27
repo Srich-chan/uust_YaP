@@ -9,7 +9,6 @@ double ctg (double x) {
 int main() {
     setlocale(LC_ALL, "Russian");
     double alpha;
-    const double eps = 0.001;
     double c1, c2;
     do {
     wprintf(L"\nalpha(в градусах) = ");
@@ -22,7 +21,7 @@ int main() {
         if (c1 == -1 |
             c2 == -1 |
             alpha == 1.5 * M_PI)
-            printf("Error: Zero Division\nTry again\n");
+            wprintf(L"Error: Zero Division\nTry again\n");
         else
             break;
 
@@ -35,6 +34,4 @@ int main() {
 
     printf("Z1 = %lf", z1);
     printf("\nZ2 = %lf", z2);
-
-
 }

@@ -12,10 +12,10 @@ add_executable(
 #        Ent.h
 #        cm_math.cpp
 #        matrix_nxn.h
-#        YaP/1.cpp
+        YaP/1.cpp
 #        YaP/2.cpp
 #        YaP/_2.cpp
-        YaP/3.cpp
+#        YaP/3.cpp
 #        YaP/4.cpp
 #        YaP/5.cpp
 #        YaP/6.cpp
