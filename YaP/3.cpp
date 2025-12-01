@@ -14,7 +14,6 @@ int main() {
         else break;
     }
 
-
     const bool A = (((int)a | (int)b) ^ ((int)b & (int)c)) == 0;
     printf("(((int)a | (int)b) ^ ((int)b & (int)c)) = %s",
         A ? "True" : "False");

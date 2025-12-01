@@ -19,13 +19,13 @@ void f () {
     }
     for (;i < n * n; ++i) {
         A[i / n][i % n] = '#';
-    }
+    } --i;
 
     for (auto& l : A)
         printf("%s \n", l);
     puts("");
 
-    i=0; // for res
+    // for res
     int x=0, y=0, k=0, turn = 1;
     // | / - - \
     // | | / \ |
@@ -34,17 +34,19 @@ void f () {
     // \ - - - /
     int max_ = ceil(sqrt(n));
     while (k < max_){
-        for (; turn == 1 ? y <= n : y >= k ; y += turn) {
+        for (; turn == 1 ? y <= n - k : y >= k ; y += turn) {
             res[i--] = A[y][x];
+            printf("Y: %d %d %c\n", y, x, turn == -1 ? '+' : '-');
         } y -= turn;
         x += turn;
-        for (; turn == 1 ? y <= n : y >= k ; y += turn) {
+        for (; turn == 1 ? y <= n - k : y >= k ; y += turn) {
             res[i--] = A[y][x];
+            printf("X: %d %d %c\n", y, x, turn == -1 ? '+' : '-');
+
         } x -= turn;
         turn = -turn;
         x += turn;
-
-        ++k;
+        if (turn == 1) ++k;
     }
     res[0] = A[x][y];
 

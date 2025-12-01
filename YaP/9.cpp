@@ -1,10 +1,12 @@
+#include <cctype>
 #include <cstdio>
 #include <cstring>
-
+#include <cctype>
 
 // Buffero OverFlowus
-unsigned const size = 1024;
 
+
+unsigned const size = 1024;
 char str[size], new_str[size], buffer[size];
 
 unsigned c, offset = 0;
@@ -24,7 +26,7 @@ int main() {
 
         if (str[i] == '<') {
             ++i;
-            if (str[i] == 'b' | str[i] == 'B') {
+            if (tolower(str[i]) == 'b') {
                 if (str[++i] == '>') {
                     strcat(new_str, matchA);
                     offset += strlen(matchA) - 2;

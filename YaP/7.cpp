@@ -3,7 +3,7 @@
 #include <ctime>
 
 
-const int generate = 1;
+const int generate = 0;
 
 
 const int MAX = 400;
@@ -18,7 +18,6 @@ int main () {
     int A[n][n];
 
     int max = std::numeric_limits<int>::min();
-
     if (generate) srand(static_cast<unsigned int>(time(0)));
 
     for (int i=0; i < n; ++i) {
@@ -29,11 +28,12 @@ int main () {
                 curr = 0;
                 opos = 0;
             } else {
-                if (generate) {
+
+                if (generate)
                     curr = (rand() % MAX) * (rand() % 2 ? -1 : 1);
-                } else {
+                else
                     scanf("%d", &curr);
-                }
+
                 opos = curr;
                 if (fabs(max) < fabs(curr)) max = curr;
                 --ms;
