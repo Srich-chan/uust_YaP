@@ -3,12 +3,7 @@
 
 int main() {
 typedef unsigned long long num;
-    num S = 0;
-
-    // S = (1 * 2) + () + (i * (i + 1) ... ( 2 * i))
-    num prev;
-    num t;
-    num n;
+    num S = 0, prev, n, t=2;
 
     do {
         printf("\nn = ");
@@ -17,13 +12,8 @@ typedef unsigned long long num;
         else break;
     } while (1);
 
-    for (num i=1; i <= n; ++i) {
-        // t = 1;
-        // for (num j=i; j <= 2 * i; ++j)
-        //     t *= j;
-
-
-
+    for (num i = 2; i <= n; ++i) {
+        t *= 2 * i * (2 * i - 1);
         prev = S;
         S += t;
         if (prev > S) {
@@ -31,6 +21,7 @@ typedef unsigned long long num;
             S = -1;
             break;
         }
+        t /= i;
     }
 
     printf("\nresult = %llu", S);

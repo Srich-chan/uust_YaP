@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <cmath>
-#include <locale.h>
+#include <locale>
 
 double ctg (double x) {
     return 1 / tan(x);
