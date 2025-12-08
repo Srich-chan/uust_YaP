@@ -23,20 +23,21 @@
 #include <cstdio>
 #include <cmath>
 #include <clocale>
+#include <cstring>
 
 
-typedef unsigned long long u64;
-u64 how_many(u64 num) {
-    u64 t = 10, c = 1;
+typedef unsigned long u32;
+u32 how_many(u32 num) {
+    u32 t = 10, c = 1;
     while (num >= t) {
         t *= 10; ++c;
     }
     return c;
 }
 
-u64 dig_sum(u64 num, u64 c) {
-    u64 t = 1, m = 10, s = 0;
-    for (u64 i=0; i < c; ++i) {
+u32 dig_sum(u32 num, u32 c) {
+    u32 t = 1, m = 10, s = 0;
+    for (u32 i=0; i < c; ++i) {
         s += (num % m) / t;
         t = m; m *= 10;
     }
@@ -45,14 +46,18 @@ u64 dig_sum(u64 num, u64 c) {
 
 int main() {
     setlocale(0, "Russian");
-    u64 n;
+    u32 n;
+    char buffer[1025];
     wprintf(L"Натуральное число: ");
-    scanf("%llu", &n);
+    if (!scanf("%llu", &n)) return -2;
+    // gets(buffer);
+
+    sscanf_s(buffer, "%llu", &n);
     if (n == 0) {
         wprintf(L"Число не натуральное, абортинг...");
         return -1;
     }
-    u64 c =  how_many(n);
-    wprintf(L"Результат:\n\tКол-во цифр:%llu\n\tСумма цифр:%llu", c, dig_sum(n, c));
+    u32 c =  how_many(n);
+    wprintf(L"Результат:\n\tКол-во цифр:%lu\n\tСумма цифр:%lu", c, dig_sum(n, c));
 
 }
