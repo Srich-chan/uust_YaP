@@ -17,7 +17,7 @@ add_executable(
 #        YaP/_2.cpp
 #        YaP/3.cpp
 #        YaP/4.cpp
-        YaP/5.cpp
+        YaP/5.cppgit
 #        YaP/6.cpp
 #        YaP/7.cpp
 #        "YaP/_7#.cpp"
