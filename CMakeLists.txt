@@ -7,7 +7,7 @@ add_executable(
         main_cmake
 #        YaP/ya_olimp.cpp
 #        main.cpp
-#        YaP/lecture/main.cpp
+        YaP/lecture/main.cpp
 #        testo.cpp
 #        Ent.h
 #        cm_math.cpp
@@ -24,7 +24,7 @@ add_executable(
 #        YaP/8.cpp
 #        YaP/9.cpp
 #        YaP/10.cpp
-        YaP/11.cpp
+#        YaP/11.cpp
 #        YaP/12.cpp
 #        YaP/13.cpp
 

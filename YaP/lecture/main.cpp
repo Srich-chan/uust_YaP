@@ -1,44 +1,61 @@
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
-// #include <windows.h>
+#include <iostream>
+#include <locale>
+using namespace std;
 
-typedef unsigned usize;
+struct point {
+    wchar_t * name;
+    int age;
+    point* next;
+};
 
-// usize count (const usize n) {
-//     usize c=0, j=0;
-//     int A[n], curr = 0;
-//
-//     return c;
-// }
+point* make_point(){
+    point* p = new point;
+    setlocale(0, "Russian");
+    wchar_t buff[64];
+    wcout << L"\nВведи имя: ";
+    wcin >> buff;
+    p->name = buff;
+    wcout << L"\nВведи возраст: ";
+    wcin >> p->age;
+    p->next=nullptr;
+    return p;
+}
 
-usize amir (const usize n) {
-    if (n == 0) return 0;
-    usize a = 1, b = 1, c;
+point* make_list(unsigned size) {
+    point* beg=make_point();
+    point* temp;
 
-    for (usize i = 0; i < n; ++i) {
-        c = a + b;
-        a = b;
-        b = c;
+    for (unsigned i=0; i < size; i++) {
+        temp = make_point();
+        temp->next = beg;
+
+        beg = temp;
     }
-    return c;
-
+    return beg;
 }
 
-usize hex (const usize n) {
-    if (n == 0) return 0;
-    usize a = 1, b = 1, c;
+void print_point(point* p) {
+    setlocale(0, "Russian");
+    wcout << p->name << '\n';
+    wcout << p->age << '\n';
+    wcout << "- --- - --- - --- -\n";
 }
 
-
-
-
+unsigned print_list(point* const beg) {
+    point *p = beg;
+    unsigned count = 0;
+    while (p) {
+        print_point(p);
+        p = p->next;
+        ++count;
+    }
+    return count;
+};
 
 int main() {
-    usize n;
-    printf("n =");
-    scanf("%u", &n);
+     setlocale(0, "Russian");
+    unsigned kalvo; cin >> kalvo;
 
-
-    printf("Itog: %u", amir(n));
+    point* list = make_list(kalvo);
+    print_list(list);
 }
