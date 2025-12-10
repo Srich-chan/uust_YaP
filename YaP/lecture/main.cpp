@@ -1,6 +1,7 @@
 #include <iostream>
 #include <locale>
 #include <cwchar>
+#include <windows.h> // Для SetConsoleCP и SetConsoleOutputCP
 using namespace std;
 
 struct point {
@@ -14,12 +15,13 @@ point* make_point() {
 
     wchar_t buff[64];
     wcout << L"\nВведи имя: ";
-    wcin >> buff;
+    wcin.get(); // Очистка буфера от предыдущего ввода
+    wcin.getline(buff, 64); // Используем getline для ввода с пробелами
 
     p->name = new wchar_t[wcslen(buff) + 1];
     wcscpy(p->name, buff);
 
-    wcout << L"\nВведи возраст: ";
+    wcout << L"Введи возраст: ";
     wcin >> p->age;
     p->next = nullptr;
 
@@ -30,12 +32,12 @@ point* make_list(unsigned size) {
     if (size == 0) return nullptr;
 
     point* beg = make_point();
-    point* temp;
+    point* r = beg;
 
+    // Создаем список в правильном порядке (первый введенный элемент - начало списка)
     for (unsigned i = 1; i < size; i++) {
-        temp = make_point();
-        temp->next = beg;
-        beg = temp;
+        r->next = make_point();
+        r = r->next;
     }
     return beg;
 }
@@ -68,6 +70,9 @@ void del_list(point* beg) {
 }
 
 int main() {
+    // Устанавливаем кодовую страницу консоли для корректного отображения кириллицы
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
 
     unsigned kalvo;
