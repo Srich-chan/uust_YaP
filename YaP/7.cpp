@@ -1,52 +1,48 @@
 #include <cstdio>
-#include <cmath>
+#include <cstdlib>
 #include <ctime>
 
-
-const int generate = 0;
-
-
-const int MAX = 400;
-const int max_spaces = (int)log10(MAX) + 3;
-
-int main () {
+int main() {
+    srand(time(0));
     printf("array size = ");
-    int ms; scanf("%d" , &ms);
+    int ms; scanf("%d", &ms);
     int n = 1;
     while ((n * n - n) / 2 + n < ms) ++n;
 
-    int A[n][n];
 
-    int max = std::numeric_limits<int>::min();
-    if (generate) srand(static_cast<unsigned int>(time(0)));
+    printf("Array size: %d \n", ms);
+    printf("Matrix nxn side: %d \n", n);
 
-    for (int i=0; i < n; ++i) {
-        for (int j=i; j < n; ++j) {
-            int& curr = A[i][j];
-            int& opos = A[j][i];
-            if (ms == 0) {
-                curr = 0;
-                opos = 0;
-            } else {
 
-                if (generate)
-                    curr = (rand() % MAX) * (rand() % 2 ? -1 : 1);
-                else
-                    scanf("%d", &curr);
+    int **A = new int*[n];
+    for (int i = 0; i < n; ++i) {
+        A[i] = new int[n];
+        for (int j = 0; j < n; ++j) A[i][j] = 0;
+    }
 
-                opos = curr;
-                if (fabs(max) < fabs(curr)) max = curr;
-                --ms;
-            }
+    int max_w = 1;
+    for (int i = 0; i < n && ms > 0; ++i) {
+        for (int j = i; j < n && ms > 0; ++j, --ms) {
+            int v = rand() % 1230 * (rand() % 2 ? -1 : 1);
+            A[i][j] = A[j][i] = v;
+
+            // Определяем максимальную ширину
+            int len = 1, t = v < 0 ? -v : v;
+            while (t >= 10) { t /= 10; ++len; }
+            if (v < 0) ++len; // знак минус
+            if (len > max_w) max_w = len;
         }
     }
-    char format[] = "%3d";
-    if (max_spaces > 3 && max_spaces < 10) format[1] = char(48 + max_spaces);
 
-    for (auto& i : A) {
-        for (int& j : i) {
-            printf(format, j);
-        }
-        puts("");
+    char fmt[10];
+    sprintf(fmt, "%%%dd ", max_w + 1);
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) printf(fmt, A[i][j]);
+        printf("\n");
+        delete[] A[i];
     }
+    delete[] A;
+
+    return 0;
 }
