@@ -1,6 +1,6 @@
 #define MAX_RAND 9000
 #define GENERATE 1
-#define CHARS 1
+// #define CHARS 1
 
 
 
