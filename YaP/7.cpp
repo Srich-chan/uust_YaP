@@ -26,6 +26,8 @@ int main() {
     if (ms <= 0) {fprintf(stderr, "Size should be NATURAL"); return -1;}
     if (handle < 1) {fprintf(stderr, "Input Conversion Err"); return -2;}
 
+    int _array[ms];
+    int iii = 0;
 
     int n = 1;
     while ((n * n - n) / 2 + n < ms) ++n;
@@ -38,6 +40,7 @@ int main() {
         A[i] = new int[n];
         for (int j = 0; j < n; ++j) A[i][j] = 0;
     }
+
 
     int max_w = 1;
     for (int i = 0; i < n && ms > 0; ++i) {
@@ -52,12 +55,18 @@ int main() {
             #endif
 
 
-            A[i][j] = A[j][i] = v;
+            _array[iii++] = A[i][j] = A[j][i] = v;
             int len = 1, t = v < 0 ? -v : v;
             while (t >= 10) { t /= 10; ++len; }
             if (v < 0) ++len;
             if (len > max_w) max_w = len;
         }
+        puts("");
+    }
+
+    printf("Array: ");
+    for (int i=0; i < ms; ++i) {
+        printf("%d. %d \n", i, _array[i]);
     }
 
     char format[32];
