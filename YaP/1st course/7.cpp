@@ -63,7 +63,7 @@ int main() {
         }
         puts("");
     }
-
+    // Вывод массива
     printf("Array: ");
     for (int i=0; i < ms; ++i) {
         printf("%d. %d \n", i, _array[i]);
