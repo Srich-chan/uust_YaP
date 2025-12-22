@@ -1,46 +1,45 @@
-#include <cctype>
-#include <cstdio>
 #include <cstring>
+#include <cstdio>
 #include <cctype>
 
-// Buffero OverFlowus
+char matchA[] = "<B>";
+char matchB[] = "</B>";
 
+const char replaceA[] = "<BOLD>";
+const char replaceB[] = "<END BOLD>";
+char * replace;
 
-unsigned const size = 1024;
-char str[size], new_str[size], buffer[size];
+char str[1024];
+char res[1024];
+int i=0, j=0;
 
-unsigned c, offset = 0;
-int i = 0;
+int var = 0;
 
+int main () {
+    if (scanf("%s", &str) < 1) {fprintf(stderr, "Conversion error"); return -1;}
+    unsigned l = strlen(str);
 
-char matchA[] = "BOLD>";
-char matchB[] = "END BOLD>";
+    for (; i < l; ++i) {
+        if (str[i] != '<') res[j++] = str[i];
 
-
-int main() {
-    puts("str:");
-    gets(str);
-
-    for (; i < strlen(str); ++i) {
-        new_str[i + offset] = str[i];
-
-        if (str[i] == '<') {
+        else {
             ++i;
-            if (tolower(str[i]) == 'b') {
-                if (str[++i] == '>') {
-                    strcat(new_str, matchA);
-                    offset += strlen(matchA) - 2;
-                }
-            } else if (str[i] == '/') {
-                ++i;
-                if (str[i] == 'b' | str[i] == 'B')
-                    if (str[++i] == '>') {
-                    strcat(new_str, matchB);
-                    offset += strlen(matchB) - 2;
-                }
-            } else if (str[i] == '<') --i; else ----i;
+            strcpy(replace, replaceA);
+            switch (tolower(str[i])) {
+                case '/':
+                    ++i;
+                strcpy(replace, replaceB);
+                case 'b':
+                    if (str[i + 1] == '>')
+                        strcat(res, replace);
+                        j += strlen(replace);
+                    break;
+
+                    default: break;
+            }
+
         }
     }
-    printf("%s", new_str);
 
+    printf("%s", res);
 }

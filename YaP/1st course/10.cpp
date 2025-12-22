@@ -71,18 +71,30 @@ unsigned wstrlen(const wchar_t * str) {
 }
 
 wchar_t ** gimme_matrix(const wchar_t * str) {
-    // void* pstr = &str;
     unsigned len = wstrlen(str);
-    unsigned i = 0;
     unsigned n = ceil(sqrt(len));
-    auto** A = new wchar_t *[n];
-    for (int l=0; l < n; ++l) {
+    wchar_t** A = new wchar_t *[n];
+
+    for (int l=0, i=0; l < n; ++l) {
         A[l] = new wchar_t[n];
         for (int j=0; j < n; ++j)
             A[l][j] = i < len ? str[i++] : L'#';
     }
     return A;
 }
+
+wchar_t * spiral (const wchar_t ** matrix) {
+    unsigned side = wstrlen(matrix[0]);
+    unsigned len = side * side;
+
+    wchar_t res[len + 1];
+
+
+
+
+
+}
+
 
 
 // #include <memory>

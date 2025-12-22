@@ -1,80 +1,80 @@
-#define MAX_RAND 9000
 #define GENERATE 1
-// #define CHARS 1
-
-
-
 #include <cstdio>
-#if GENERATE
 #include <cstdlib>
 #include <ctime>
-#endif
 
+unsigned dlen (unsigned x) {
+    unsigned spaces = 1;
+    while (x >= 10) {
+        x /= 10;
+        ++spaces;
+    }
+    return spaces;
+}
+unsigned dlen (int x) {
+    return dlen((unsigned) abs(x)) + (x < 0);
+}
 
 int main() {
 
     #if GENERATE
-    srand(time(0));
+    srand(static_cast<unsigned int>(time(nullptr)));
     #endif
 
-    int ms;
-    int handle;
-
+    unsigned ms;
     printf("array size = ");
-    handle = scanf("%d", &ms);
 
-    if (ms <= 0) {fprintf(stderr, "Size should be NATURAL"); return -1;}
-    if (handle < 1) {fprintf(stderr, "Input Conversion Err"); return -2;}
-
-    int _array[ms];
-    int iii = 0;
+    if (scanf("%lld", &ms) < 1) {fprintf(stderr, "Input Conversion Err"); return -2;}
+    if (ms == 0) {fprintf(stderr, "Size should be NATURAL"); return -1;}
 
     int n = 1;
     while ((n * n - n) / 2 + n < ms) ++n;
 
-    printf("Array size: %d \n", ms);
+    printf("Array size: %u \n", ms);
     printf("Matrix nxn side: %d \n", n);
+
+    int _array[ms];
+    int iii = 0;
 
     int **A = new int*[n];
     for (int i = 0; i < n; ++i) {
         A[i] = new int[n];
-        for (int j = 0; j < n; ++j) A[i][j] = 0;
+        for (int j=0; j < n; ++j) A[i][j] = 0;
+
     }
 
-
-    int max_w = 1;
-    for (int i = 0; i < n && ms > 0; ++i) {
-        for (int j = i; j < n && ms > 0; ++j, --ms) {
-
-            #if GENERATE
-                int v = rand() % MAX_RAND * (rand() % 2 ? -1 : 1);
-            #else
-                int v;
-                printf("\nGimme el: ");
+        int max = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n && iii < ms; ++j) {
+            int v;
+            if (GENERATE)
+                v = (rand() % (RAND_MAX / 2)) * (rand() < RAND_MAX / 2 ? -1 : 1);
+            else {
+                printf("Gimme %d: ", iii);
                 scanf("%d", &v);
-            #endif
+            }
+            int abs_v = abs(v);
+            if (max < abs_v) max = abs_v;
 
-
-            _array[iii++] = A[i][j] = A[j][i] = v;
-            int len = 1, t = v < 0 ? -v : v;
-            while (t >= 10) { t /= 10; ++len; }
-            if (v < 0) ++len;
-            if (len > max_w) max_w = len;
+            _array[iii++] = v;
+            A[i][j] = A[j][i] = v;
         }
-        puts("");
-    }
-    // Вывод массива
-    printf("Array: ");
-    for (int i=0; i < ms; ++i) {
-        printf("%d. %d \n", i, _array[i]);
     }
 
-    char format[32];
-    sprintf(format, "%%%dd ", max_w + 1);
+    unsigned spaces = dlen (max);
+    unsigned ms_len = dlen(ms);
+
+    // Вывод массива
+    printf("Array (%%index%%. %%number%%):\n");
+    for (int i=0; i < iii; ++i) {
+        printf("%*d. %*d \n", ms_len, i, spaces + 1,  _array[i]);
+    }
+    puts("");
 
     for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) printf(format, A[i][j]);
-        printf("\n");
+        for (int j = 0; j < n; ++j) printf("%*d", spaces + 2, A[i][j]);
+        puts("");
+
         delete[] A[i];
     }
     delete[] A;
