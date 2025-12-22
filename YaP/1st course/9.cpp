@@ -1,45 +1,31 @@
-#include <cstring>
 #include <cstdio>
+#include <cstring>
 #include <cctype>
 
-char matchA[] = "<B>";
-char matchB[] = "</B>";
+#define size 1024
+char str[size], new_str[2 * size];
+constexpr char matchA[] = "<BOLD>";
+constexpr char matchB[] = "<END BOLD>";
 
-const char replaceA[] = "<BOLD>";
-const char replaceB[] = "<END BOLD>";
-char * replace;
+unsigned offset = 0;
+unsigned i = 0;
 
-char str[1024];
-char res[1024];
-int i=0, j=0;
 
-int var = 0;
+int main() {
+    puts("str:");
+    gets(str);
 
-int main () {
-    if (scanf("%s", &str) < 1) {fprintf(stderr, "Conversion error"); return -1;}
-    unsigned l = strlen(str);
-
-    for (; i < l; ++i) {
-        if (str[i] != '<') res[j++] = str[i];
-
-        else {
-            ++i;
-            strcpy(replace, replaceA);
-            switch (tolower(str[i])) {
-                case '/':
-                    ++i;
-                strcpy(replace, replaceB);
-                case 'b':
-                    if (str[i + 1] == '>')
-                        strcat(res, replace);
-                        j += strlen(replace);
-                    break;
-
-                    default: break;
-            }
-
+    for (;str[i] != 0; ++i) {
+        int kek = str[i + 1] == '/';
+        if (str[i] == '<' && toupper(str[i + 1 + kek]) == 'B' && str[i + 2 + kek] == '>') {
+            strcat(
+                new_str,
+                !kek ? matchA : matchB
+            );
+            i += 3 + kek;
+            offset += strlen(!kek ? matchA : matchB) - (3 + kek);
         }
+        new_str[i + offset] = str[i];
     }
-
-    printf("%s", res);
+    puts(new_str);
 }
