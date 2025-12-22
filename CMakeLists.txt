@@ -20,10 +20,10 @@ add_executable(
 #        "YaP/1st course/5.cpp"
 #        "YaP/1st course/6.cpp"
 #        YaP/lecture/llu_overflow.cpp
-        "YaP/1st course/7.cpp"
+#        "YaP/1st course/7.cpp"
 #        "YaP/1st course/_7#.cpp"
 #        "YaP/1st course/8.cpp"
-#        "YaP/1st course/9.cpp"
+        "YaP/1st course/9.cpp"
 #        "YaP/1st course/10.cpp"
 #        "YaP/1st course/11.cpp"
 #        "YaP/1st course/12.cpp"
