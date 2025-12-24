@@ -1,107 +1,85 @@
-// #include <cstdio>
-// #include <cstring>
-// #include <cmath>
-//
-// const unsigned size = 1024;
-// char str[size];
-//
-// void f () {
-//     puts("str:"); gets(str);
-//     unsigned s = strlen(str);
-//     const int n = int (ceil(sqrt(s)));
-//
-//     char A[n][n+1];
-//     char res[n * n + 1];
-//     int i=0;
-//
-//     for (; i < s; ++i) {
-//         A[i / n][i % n] = str[i];
-//     }
-//     for (;i < n * n; ++i) {
-//         A[i / n][i % n] = '#';
-//     } --i;
-//
-//     for (auto& l : A)
-//         printf("%s \n", l);
-//     puts("");
-//
-//     // for res
-//     int x=0, y=0, k=0, turn = 1;
-//     // | / - - \
-//     // | | / \ |
-//     // | | X | |
-//     // | \ - / |
-//     // \ - - - /
-//     int max_ = ceil(sqrt(n));
-//     while (k < max_){
-//         for (; turn == 1 ? y <= n - k : y >= k ; y += turn) {
-//             res[i--] = A[y][x];
-//             printf("Y: %d %d %c\n", y, x, turn == -1 ? '+' : '-');
-//         } y -= turn;
-//         x += turn;
-//         for (; turn == 1 ? y <= n - k : y >= k ; y += turn) {
-//             res[i--] = A[y][x];
-//             printf("X: %d %d %c\n", y, x, turn == -1 ? '+' : '-');
-//
-//         } x -= turn;
-//         turn = -turn;
-//         x += turn;
-//         if (turn == 1) ++k;
-//     }
-//     res[0] = A[x][y];
-//
-//     puts(res);
-// }
-//
-//
-//
-//     // f();
-
-
-// #include <cstdlib>
 #include <cstdio>
 #include <cmath>
 #include <clocale>
 #include <cstring>
 
-unsigned wstrlen(const wchar_t * str) {
-    unsigned i=0;
-    while (str[i] != 0) ++i;
-    return i;
-}
+#define LOG 1
 
-wchar_t ** gimme_matrix(const wchar_t * str) {
-    unsigned len = wstrlen(str);
+
+wchar_t ** gimme_matrix(const wchar_t * const &str) {
+    unsigned len = wcslen(str);
     unsigned n = ceil(sqrt(len));
     wchar_t** A = new wchar_t *[n];
 
-    for (int l=0, i=0; l < n; ++l) {
-        A[l] = new wchar_t[n];
+    for (int i=0, l=0; i < n; ++i) {
+        A[i] = new wchar_t[n + 1];
         for (int j=0; j < n; ++j)
-            A[l][j] = i < len ? str[i++] : L'#';
+            A[i][j] = l < len ? str[l++] : L'#';
+        A[i][n] = L'\0';
     }
+#if LOG
+    printf("n = %u, len = %u  \n", n ,len);
+    for (int i=0; i < n; ++i) {
+        for (int j=0; j < n; ++j) {
+            wprintf(L"  %lc", A[i][j]);
+        }
+        wprintf(L"\n");
+    }
+#endif
     return A;
 }
 
-wchar_t * spiral (const wchar_t ** matrix) {
-    unsigned side = wstrlen(matrix[0]);
-    unsigned len = side * side;
+void free_matrix(const wchar_t ** &matrix, const unsigned n) {
+    for (unsigned i = 0; i < n; ++i) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+    matrix = nullptr;
+}
+wchar_t * spiral(const wchar_t ** const &matrix, unsigned n) {
+    wchar_t * res = new wchar_t[n * n + 1];
+    int top = 0, bottom = n - 1;
+    int left = 0, right = n - 1;
+    int idx = 0;
 
-    wchar_t res[len + 1];
+    while (top <= bottom && left <= right) {
+        for (int i = left; i <= right; ++i) {
+            res[idx++] = matrix[top][i];
+        }
+        top++;
 
+        for (int i = top; i <= bottom; ++i) {
+            res[idx++] = matrix[i][right];
+        }
+        right--;
 
+        if (top <= bottom) {
+            for (int i = right; i >= left; --i) {
+                res[idx++] = matrix[bottom][i];
+            }
+            bottom--;
+        }
 
+        if (left <= right) {
+            for (int i = bottom; i >= top; --i) {
+                res[idx++] = matrix[i][left];
+            }
+            left++;
+        }
+    }
 
-
+    res[idx] = L'\0';
+    return res;
 }
 
 
-
-// #include <memory>
-
-
 int main () {
-    wchar_t str[1024];
-    scanf("%s", str);
+    wchar_t str[1024], *res;
+    wscanf(L"%s", str);
+    auto A = gimme_matrix(str);
+    res = spiral(A);
 
+    wprintf(res);
+
+    free_matrix(A);
 }
