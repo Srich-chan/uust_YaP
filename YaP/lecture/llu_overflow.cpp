@@ -2,11 +2,11 @@
 #include <bitset>
 
 int main () {
-    unsigned long long m = 1;
+    unsigned m = 100;
+    int n = (int)m - 1;
 
-    printf("%llu \n", m);
-    m += ULLONG_MAX;
-    printf("%llu \n", m);
+    printf("%u \n", m);
+    printf("%d \n", n);
 
 
 }
