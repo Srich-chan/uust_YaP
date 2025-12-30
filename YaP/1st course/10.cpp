@@ -9,10 +9,9 @@ int main() {
     wprintf(L"Введите строку: ");
     char str[1024];
     scanf("%s", str);
-
+///
     unsigned str_len = strlen(str);
     unsigned m_side = ceil(sqrt(str_len));
-    // Определяется A, str_len, m_side
     char** A = new char*[m_side];
 
     for (unsigned i = 0, l = 0; i < m_side; ++i) {
@@ -21,16 +20,16 @@ int main() {
             A[i][j] = l < str_len ? str[l++] : '#';
         A[i][str_len] = '\0';
     }
-
+///
     printf("n = %u, len = %u\n", m_side, str_len);
     for (unsigned i = 0; i < m_side; ++i) {
         for (unsigned j = 0; j < m_side; ++j)
             printf("  %c", A[i][j]);
         printf("\n");
     }
-    // C A[0][0] против часовой по спирали считывается строка, возвращается адрес массива
-    char* res = new char[m_side * m_side + 1];
 
+///
+    char* res = new char[m_side * m_side + 1];
     int t = 0, b = (int)m_side - 1;
     int l = 0, r = (int)m_side - 1;
     int idx = 0;
@@ -56,15 +55,15 @@ int main() {
             l++;
         }
     }
-        for (int i = (int)(m_side * m_side) - 1; i >= 0; --i)
-            printf("%c", res[i]);
-        puts("");
+///
+    for (int i = (int)(m_side * m_side) - 1; i >= 0; --i)
+        printf("%c", res[i]);
+    puts("");
+///
+    for (unsigned i = 0; i < m_side; ++i)
+        delete[] A[i];
+    delete[] A;
+    delete[] res;
 
-        // СВОБОДА
-        for (unsigned i = 0; i < m_side; ++i)
-            delete[] A[i];
-        delete[] A;
-        delete[] res;
-
-        return 0;
-    }
+    return 0;
+}
