@@ -31,40 +31,39 @@ int main() {
     // C A[0][0] против часовой по спирали считывается строка, возвращается адрес массива
     char* res = new char[m_side * m_side + 1];
 
-    int t = 0, b = (int)m_side - 1;
-    int l = 0, r = (int)m_side - 1;
+    // Объявление границ спирального обхода
+    int top = 0, bottom = (int)m_side - 1;
+    int left = 0, right = (int)m_side - 1;
     int idx = 0;
 
-    while (t <= b && l <= r) {
-        for (int i = l; i <= r; ++i)
-            res[idx++] = A[i][t];
-        t++;
-
-        for (int i = t; i <= b; ++i)
-            res[idx++] = A[r][i];
-        r--;
-
-        if (t <= b) {
-            for (int i = r; i >= l; --i)
-                res[idx++] = A[i][b];
-            b--;
+    while (top <= bottom && left <= right) {
+        for (int i = left; i <= right; ++i)
+            res[idx++] = A[i][top];
+        top++;
+        for (int i = top; i <= bottom; ++i)
+            res[idx++] = A[right][i];
+        right--;
+        if (top <= bottom) {
+            for (int i = right; i >= left; --i)
+                res[idx++] = A[i][bottom];
+            bottom--;
         }
-
-        if (l <= r) {
-            for (int i = b; i >= t; --i)
-                res[idx++] = A[l][i];
-            l++;
+        if (left <= right) {
+            for (int i = bottom; i >= top; --i)
+                res[idx++] = A[left][i];
+            left++;
         }
     }
-        for (int i = (int)(m_side * m_side) - 1; i >= 0; --i)
-            printf("%c", res[i]);
-        puts("");
 
-        // СВОБОДА
-        for (unsigned i = 0; i < m_side; ++i)
-            delete[] A[i];
-        delete[] A;
-        delete[] res;
+    for (int i = (int)(m_side * m_side) - 1; i >= 0; --i)
+        printf("%c", res[i]);
+    puts("");
 
-        return 0;
-    }
+    // Освобождение памяти
+    for (unsigned i = 0; i < m_side; ++i)
+        delete[] A[i];
+    delete[] A;
+    delete[] res;
+
+    return 0;
+}
