@@ -1,31 +1,47 @@
+#include <iostream>
 #include <cstdio>
-
-typedef struct {
-    char name[128];
-    unsigned weight;
-} diet;
+#include <cstring>
+#include <cstdlib>
 
 struct ZOO {
-    char name[128];
-    char nick[128];
-    diet _diet[];
+    char* name = nullptr;
+    char* nick = nullptr;
+    char* diet_type = nullptr;
+    float diet_weight = 0;
+    int age = 0;
+    
+    ~ZOO () {
+        delete[] name;
+        delete[] nick;
+        delete[] diet_type;
+    }
+};
 
 
+constexpr int zoo_size = 80;
+constexpr int buffer_size = 512;
+
+struct Solution {
+    FILE* file;
+    ZOO* pmi_pad;
+    Solution() {
+        file = fopen("13. ZOO.txt", "r");
+            /* 
+        pmi_pad = new ZOO[zoo_size];
+        
+        char buffer[buffer_size];
+        while (fgets(buffer, buffer_size, file)) {
+            // printf(const char *const Format, ...)
+        }
+        */
+        
+    }
+    ~Solution(){
+        fclose(file);
+        delete[] pmi_pad;
+    }
 };
 
 int main () {
-    ZOO Oleg = ZOO {
-        "Oleg",
-        "Gega",
-        {
-            {"meat", 1}
-        }
-    };
-    ZOO * he = &Oleg;
-
-    printf(he->_diet->name);
-    if (he->_diet->name == "meat") printf("\n%s кушац %s", Oleg.name, Oleg._diet->name);
-
-
-    else printf("\nidk");
+    Solution();
 }
