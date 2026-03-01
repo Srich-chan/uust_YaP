@@ -1,0 +1,1 @@
+#define PROJECT_PATH "C:\\main_repos\\learn\\uust_YaP\\YaP\\1st course"
