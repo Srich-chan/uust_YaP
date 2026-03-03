@@ -2,6 +2,10 @@
 #include <cmath>
 #include <locale>
 
+#ifndef M_PI
+#define M_PI 3.1415
+#endif
+
 double ctg (double x) {
     return 1 / tan(x);
 }
