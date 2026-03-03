@@ -44,7 +44,7 @@ struct Solution {
         wchar_t* context = nullptr;
 
         while (fgetws(buffer, buffer_size, file) && count < zoo_size) {
-            // убираем перенос строки
+            
             size_t len = wcslen(buffer);
             if (len && buffer[len - 1] == L'\n') {
                 buffer[len - 1] = L'\0';
@@ -78,7 +78,6 @@ struct Solution {
         }
         std::wcout << L"Всего считано сокурсников: " << count << L'\n';
 
-        // сортировка индексов по имени
         int* sorted_indexes = new int[count];
         for (int i = 0; i < count; i++) {
             sorted_indexes[i] = i;
@@ -94,7 +93,7 @@ struct Solution {
             }
         }
 
-        // вывод хищников
+        // вывод мясожрунов
         for (int i = 0; i < count; i++) {
             int idx = sorted_indexes[i];
             if (wcscmp(pmi_pad[idx].diet_type, L"meat") == 0 ||
