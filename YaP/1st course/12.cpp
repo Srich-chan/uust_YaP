@@ -37,6 +37,4 @@ int main(void) {
 
     unsigned time=0;
     unsigned p = 0;
-
-
 }

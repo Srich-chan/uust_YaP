@@ -6,12 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(
         main_cmake
 #        YaP/ya_olimp.cpp
-#        main.cpp
 #        YaP/lecture/main.cpp
-#        testo.cpp
-#        Ent.h
-#        cm_math.cpp
-#        matrix_nxn.h
 #        "YaP/1st course/1.cpp"
 #        "YaP/1st course/2.cpp"
 #        "YaP/1st course/_2.cpp"
