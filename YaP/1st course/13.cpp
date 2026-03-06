@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdio>
-#include <cstring>
 #include <cstdlib>
 
 #include <windows.h>
@@ -28,29 +27,28 @@ constexpr int zoo_size = 256;
 constexpr int buffer_size = 512;
 
 struct Solution {
+    FILE* sorted = _wfopen(PROJECT_PATH L"\\13. indexes.txt", L"w, ccs=UTF-8");
     FILE* file = _wfopen(PROJECT_PATH L"\\13. ZOO B.txt", L"r, ccs=UTF-8");
     ZOO* pmi_pad = nullptr;
-    int count = 0;
-
+    
     Solution() {
         if (!file) {
             std::wcerr << L"Ошибка: не удалось открыть файл\n";
             return;
         }
-
+        
         pmi_pad = new ZOO[zoo_size]{};
-
+        
         wchar_t buffer[buffer_size];
         wchar_t* line;
         wchar_t* context = nullptr;
-
+        
+        int count = 0;
         while (fgetws(buffer, buffer_size, file) && count < zoo_size) {
-            
             size_t len = wcslen(buffer);
             if (len && buffer[len - 1] == L'\n') {
                 buffer[len - 1] = L'\0';
             }
-
             // В случае хотя бы одного пустого поля скипаем всю строку
             // Название животного
             line = wcstok_s(buffer, L", ", &context);
@@ -83,15 +81,18 @@ struct Solution {
             ++count;
         }
         std::wcout << L"\nВсего насчитано сокурсников: " << count << L'\n';
-
+        
+        
         int sorted_indexes[zoo_size];
-        for (int i = 0; i < count; i++) {
+        for (int i=0; i < count; ++i) {
             sorted_indexes[i] = i;
         }
+
+
         for (int i = 0; i < count - 1; i++) {
             for (int j = 0; j < count - i - 1; j++) {
                 if (wcscmp(pmi_pad[sorted_indexes[j]].name,
-                    pmi_pad[sorted_indexes[j + 1]].name) > 0) {
+                        pmi_pad[sorted_indexes[j + 1]].name) > 0) {
                     int temp = sorted_indexes[j];
                     sorted_indexes[j] = sorted_indexes[j + 1];
                     sorted_indexes[j + 1] = temp;
@@ -124,12 +125,18 @@ struct Solution {
                        << pmi_pad[idx].age          << L'\n';
         }
         #endif
+
+        #if 1
+        for(int i=0; i < count; ++i) {
+            fwprintf(sorted, L"%i\n", sorted_indexes[i] + 1);
+        }
+        #endif
     }
 
     ~Solution() {
         if (file) fclose(file);
+        if (sorted) fclose(sorted);
         if (pmi_pad) delete[] pmi_pad;
-
     }
 };
 
@@ -141,3 +148,5 @@ int main() {
     Solution solution;
     return 0;
 }
+
+//todo: Манагер

@@ -8,9 +8,13 @@ curr_dir, task, *args = argv
 p_tasks = join(
     "C:\\", "repos", "user", "CXX_projects", "main_cmake", "YaP", "1st course"
 )
-p_builds = join(p_tasks, "builds")
+p_builds = join(p_tasks, "bin")
 if task[-4:] == ".cpp": 
     task = task[:-4]
+
+if task[:2] in ".\\ ./".split():
+    task = task[2:]
+
 print(task)
 variants_to_run = glob(pathname=f"{task}.cpp", root_dir=p_tasks)
 
