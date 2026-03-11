@@ -4,7 +4,7 @@
 #include <cwchar>
 #include "windows.h"
 // Путь проекта
-#include "path.h"
+#include "paths.h"
 
 struct Player {
     int number; // номер футболиста
@@ -32,7 +32,7 @@ struct Solution {
     
     
     Solution() {
-        file = _wfopen(PROJECT_PATH L".\\12. some some.txt", L"r, css='UTF-8'");
+        file = _wfopen(p_PROJECT L".\\12. some some.txt", L"r, css='UTF-8'");
 
         if (!file) {
             fwprintf(stderr, L"Варнинг: всё сломалось");
