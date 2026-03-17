@@ -65,7 +65,7 @@ void ReadFromFile(AEROFLOT fl[], int& cnt, const char* filename)    // чтен�
     sortf(fl, cnt);
     cout << "Загружено " << cnt << " записей из файла." << endl;
 }
-
+    
 
 void WriteToFile(const AEROFLOT fl[], int cnt, const char* filename)    // запись в файл
 {
