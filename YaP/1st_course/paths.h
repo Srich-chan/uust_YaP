@@ -1,2 +1,5 @@
 #pragma once
-#define p_PROJECT "C:\\repos\\user\\CXX_projects\\main_cmake\\YaP\\1st course\\
+#define p_PROJECT "C:/main_repos/learn/uust_YaP/1st_course/
+
+
+
