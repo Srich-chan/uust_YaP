@@ -4,7 +4,7 @@ project(main_cmake)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(
-        main_cmake
+        main
         #        YaP/ya_olimp.cpp
 #        YaP/lecture/main.cpp
 #        "YaP/1st_course/1.cpp"
@@ -30,4 +30,9 @@ add_executable(
 #        "YaP/1st_course/13.cpp"
         YaP/1st_course/19.cpp
 
+)
+
+add_executable(
+        uust_13
+        YaP/1st_course/13.cpp
 )
