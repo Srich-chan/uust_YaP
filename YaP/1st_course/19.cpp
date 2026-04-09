@@ -2,21 +2,20 @@
 #include <fstream>
 #include <locale>
 #include <random>
-#include <set>
 #include <vector>
 #include <windows.h>
 
 
-// using set, wcin, wcout, sqrt, cout;
+
+//TODO: Переделать нахуй
 using namespace std;
 
+vector<int> primes;
 
 struct diap {
 private:
-    // Кэш
-    vector<int> primes;
     // Генератор
-    mt19937 rand{1531};
+    // mt19937 rand{1531};
 public:
     int k; // от
     int n; // до
@@ -24,13 +23,13 @@ public:
     int max_prime;
     int m;
     int p;
-    set<int> set;
+    vector<int> result;
 
-    diap (int a, int b, int * _m=nullptr, int * _p=nullptr)
+    diap (int a, int b, int mn, int pn)
     : k{a}, n{b} {
-        min_prime = a < 2? 2 : a;
-        max_prime = b;
-        primes.push_back(a);
+        min_prime = abs(a) < 2? 2 : a;
+        max_prime = abs(b);
+        primes[0];
         while (!is_prime(min_prime)) ++min_prime;
         while (!is_prime(max_prime)) --max_prime;
         while (primes.back() < max_prime) {
@@ -38,12 +37,11 @@ public:
                 get_prime_to_right(primes.back())
             );
         }
-        m = !_m? primes[rand() % primes.size()] : *_m;
-        p = !_p? primes[rand() % primes.size()] : *_p;
+
 
         for (int i=a; i <= b; ++i) {
             if (i % m == 0 ^ i % p == 0)
-                set.insert(i);
+                result.push_back(i);
         }
     }
 
@@ -85,12 +83,20 @@ int main () {
 
     ifstream tests{p_PROJECT "19 tests.txt"};
     while (!tests.eof()) {
-        int k, n, w=0, p=0;
-        tests >> k >> n >> w >> p;
-        wcout << L"\n Введены: " << k << L" и " << n << L" и " << w << L" и " << p << "\n";
+        char buff[256];
+        tests.getline(buff, 256);
+        if (buff[0] == '#') continue; // # - пустая строка
+
+        int k = strtol(buff, nullptr, 10);
+        int n = strtol(buff, nullptr, 10);
+        int w = strtol(buff, nullptr, 10);
+        int p = strtol(buff, nullptr, 10);
+
+        wcout << L"\n Введены: " << k << L" и " << n
+        << L" и " << w << L" и " << p << "\n";
 
         diap diap(k, n, w?&w:nullptr , p?&p:nullptr);
-        for (auto& el : diap.set) {
+        for (auto& el : diap.result) {
             wcout << el << " ";
         }
     }

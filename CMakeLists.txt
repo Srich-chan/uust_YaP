@@ -7,7 +7,7 @@ add_executable(
         main
         #        YaP/ya_olimp.cpp
 #        YaP/lecture/main.cpp
-#        "YaP/1st_course/1.cpp"
+        "YaP/1st_course/1.cpp"
 #        "YaP/1st_course/2.cpp"
 #        "YaP/1st_course/_2.cpp"
 #        "YaP/1st_course/3.cpp"
@@ -21,15 +21,17 @@ add_executable(
 #        "YaP/1st_course/9.cpp"
 #        "YaP/1st_course/10.cpp"
         #        "YaP/1st_course/11.cpp"
-#        "YaP/1st_course/12.cpp"
-#        "YaP/1st_course/13 custom arrays.cpp"
-#        "YaP/1st_course/13 ZOO B.txt"
-#        "YaP/1st_course/13. indexes.txt"
-#        "YaP/1st_course/paths.h"
-#        "YaP/1st_course/13 last.cpp"
-#        "YaP/1st_course/13.cpp"
-        YaP/1st_course/19.cpp
 
+)
+
+add_executable(
+        uust_19
+        YaP/1st_course/19.cpp
+)
+
+add_executable(
+        uust_12
+        YaP/1st_course/12.cpp
 )
 
 add_executable(
