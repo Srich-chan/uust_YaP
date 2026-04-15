@@ -8,7 +8,8 @@ add_executable(
         #        YaP/ya_olimp.cpp
 #        YaP/lecture/main.cpp
         "YaP/1st_course/1.cpp"
-#        "YaP/1st_course/2.cpp"
+        "YaP/ex/4 matrix.cpp"
+        #        "YaP/1st_course/2.cpp"
 #        "YaP/1st_course/_2.cpp"
 #        "YaP/1st_course/3.cpp"
 #        "YaP/1st_course/4.cpp"
@@ -38,3 +39,5 @@ add_executable(
         uust_13
         YaP/1st_course/13.cpp
 )
+add_executable(uust_22 YaP/1st_course/22.cpp)
+add_executable(exam_matrix "YaP/ex/4 matrix.cpp")
