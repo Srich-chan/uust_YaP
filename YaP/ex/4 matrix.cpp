@@ -200,6 +200,7 @@ int main() {
 
     A.reform(5, 5);
     A.print();
+    A.print_size();
 
     A.insert_row({1123, 5234});
     A.print();
@@ -212,6 +213,4 @@ int main() {
     Matrix B = A.sub_Matrix({2, 4}, {1, 3});
     B.print();
     B.print_size();
-
-
 }

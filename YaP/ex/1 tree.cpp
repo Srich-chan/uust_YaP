@@ -51,16 +51,15 @@ public:
     }
 
     size_t count_childs() {
-        if (child) {
-            branch* head = child;
-            size_t c = 1;
-            while (head->next_sibling != nullptr) {
-                head = head->next_sibling;
-                ++c;
-            }
-            return c;
+        if (!child) return 0;
+
+        branch* head = child;
+        size_t c = 1;
+        while (head->next_sibling != nullptr) {
+            head = head->next_sibling;
+            ++c;
         }
-        return 0;
+        return c;
     }
 
     branch* operator[](size_t ind) {
