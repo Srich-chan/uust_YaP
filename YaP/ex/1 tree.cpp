@@ -1,5 +1,8 @@
-#include <iostream>
+﻿#include <iostream>
 #include <random>
+
+
+using namespace std;
 
 class branch {
     branch* add_sibling(int value=228) {
@@ -10,7 +13,7 @@ class branch {
         branch*& sib = head->next_sibling;
         sib = new branch{head->parent};
         sib->prev_sibling = head;
-        sib->some = value;
+        sib->ass = value;
 
         return sib;
     }
@@ -27,14 +30,13 @@ class branch {
         if (child != nullptr) c += child->_count_leaves();
         if (next_sibling != nullptr) c += next_sibling->_count_leaves();
         return c;
-
     }
 public:
 
     branch* add_child(int value=10) {
         if (child == nullptr) {
             child = new branch{this};
-            child->some = value;
+            child->ass = value;
             return child;
         }
         return child->add_sibling(value);
@@ -76,7 +78,7 @@ public:
     branch* child=nullptr;
     branch* prev_sibling=nullptr;
     branch* next_sibling=nullptr;
-    int some=67;
+    int ass=67;
 
     ~branch() {
         delete child;
@@ -84,9 +86,9 @@ public:
     }
 };
 
+
 class tree{
 public:
-
     branch* root;
     // Пустое древо
     tree() {
@@ -138,7 +140,6 @@ public:
 };
 
 
-using namespace std;
 int main() {
     std::mt19937 gen(123);
     tree puk(gen);

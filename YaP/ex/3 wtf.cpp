@@ -15,7 +15,7 @@ class list {
     node* ptr_at_reverse(size_t ind) {
         if (size == 0) throw std::domain_error{"sdf"};
         if (ind >= size) throw std::domain_error{"www"};
-        if (ind == 0) return tail;
+        if (!ind) return tail;
         node* w = head;
         while (size - ind > 1) {
             w = w->next;
@@ -46,11 +46,11 @@ public:
         ++size;
     }
 
-    // ОБРАТНОЕ ИНДЕКСИРОВАНИЕ
-    // list[0] == tail;
-    // list[size - 1] == head;
+    // // ОБРАТНОЕ ИНДЕКСИРОВАНИЕ
+    // // list[0] == tail;
+    // // list[size - 1] == head;
     // double operator[](size_t ind) {
-    //     return ptr_at_reverse(ind)->value;
+    // return ptr_at_reverse(ind)->value;
     // }
     double operator[](size_t ind) {
         return ptr_at(ind)->value;
@@ -82,11 +82,13 @@ public:
             push(val);
             return;
         }
-        node* pr = ptr_at(ind-1);
-        node* t = pr->next;
-        pr->next = new node{val, t};
+        insert(val, ptr_at(ind-1));
+    }
+
+    void insert(double val, node* par) {
+        node *t = par->next;
+        par->next = new node{val, t};
         ++size;
-        if (ind == size) tail = tail->next;
     }
 
     ~list() {
@@ -112,24 +114,46 @@ public:
     void print() {
         cout << str() << '\n';
     }
+
+    void TASK() {
+        double first_negative=0;
+        node* h = head;
+        while (h) {
+            if (h->value < 0) {
+                first_negative = h->value;
+                break;
+            }
+            h = h->next;
+        }
+        if (0 <= first_negative) return;
+
+        for (h = head; !!h->next; h = h->next) {
+            if (h->next->value == 20) {
+                // h->value = first_negative;
+                // ИЛИ
+                insert(first_negative, h);
+                h = h->next;
+            }
+        }
+    }
 };
+
+
+
+
 
 int main() {
     list puk{1};
     for (int i=2; i < 20; ++i) {
-        puk.push(i);
+        puk.push(20);
     }
+    puk.push(-123);
+    puk.push(-23);
+    puk.push(-4321);
+    puk.push(-1);
     puk.print();
 
-    puk.insert(67, 2);
-    puk.insert(67, 2);
-    puk.insert(67, 2);
-    puk.insert(67, 2);
-    puk.insert(67, 2);
-    puk.insert(67, 0);
-    puk.insert(228, puk.size);
-    puk.insert(228, puk.size); // <=> push(228)
-    puk.insert(228, puk.size);
+    puk.TASK();
 
     puk.print();
 }

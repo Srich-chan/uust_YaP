@@ -187,14 +187,13 @@ public:
 };
 
 
-
 int main() {
     setlocale(0, "Russian");
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
     auto A = Matrix(10, 10);
-    A.arrange_from(1);
+    A.arrange_from(123, 0.12);
     A.print();
     A.print_size();
 
@@ -206,7 +205,8 @@ int main() {
     A.print();
     A.print_size();
 
-    A.insert_column({8, 800, 555 ,35, 35}, 2);
+    A.insert_column({8, 800, 555, 35, 35, 228, 67, 666, 123}, 2);
+
     A.print();
     A.print_size();
 

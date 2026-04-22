@@ -3,12 +3,6 @@
 
 using namespace std;
 
-
-
-
-
-
-
 class Node {
 public:
     double value;
@@ -93,14 +87,15 @@ public:
     }
 
     void print_layer(size_t layer) {
-
+        print_layer_rec(0, layer, this);
     }
 
 
-
 private:
-    void print_layer_rec(size_t current, size_t target) {
-
+    void print_layer_rec(size_t current, size_t target, Node* head) {
+        if (current == target) {
+            ;
+        }
     }
 
 
