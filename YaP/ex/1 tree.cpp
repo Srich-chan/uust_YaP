@@ -103,9 +103,9 @@ public:
         };
         root = new branch();
         branch* head = root->add_child(rand() % 666);
-        bool puk = true;
         size_t c = 1;
 
+        bool puk = true;
         while (puk) {
             switch (rand() % (finish + 1)) {
                 case new_child:
@@ -123,9 +123,7 @@ public:
                     break;
 
                 case finish:
-                    if (c > 10) {
-                        puk = false;
-                    }
+                    if (c > 10) puk = false;
                     break;
 
                 default:

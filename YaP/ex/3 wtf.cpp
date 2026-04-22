@@ -128,7 +128,8 @@ int main() {
     puk.insert(67, 2);
     puk.insert(67, 0);
     puk.insert(228, puk.size);
+    puk.insert(228, puk.size); // <=> push(228)
     puk.insert(228, puk.size);
-    puk.insert(228, puk.size);
+
     puk.print();
 }
