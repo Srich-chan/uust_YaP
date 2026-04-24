@@ -29,26 +29,26 @@ using namespace std;
 //     Node* end=nullptr;
 // public:
 // };
+//
+class Footballer {
+public:
+    int number=0;
+    string name; // С инициалами
+    int way=0;
+    double time=0;
+    size_t goals_size=0;
+    vector<double> goals;
+    size_t danger_count=0;
+    Footballer (int a1, string a2, int a3, double a4, size_t a5, vector<double> a6, size_t a7)
+    : number(a1), name(a2), way(a3), time(a4), goals_size(a5), goals{a6}, danger_count(a7) {}
+};
 
-// class Footballer {
-// public:
-//     int number=0;
-//     string name; // С инициалами
-//     int way=0;
-//     double time=0;
-//     size_t goals_size=0;
-//     vector<double> goals;
-//     size_t danger_count=0;
-// };
 
-typedef tuple<int, wstring, int, double,
-    size_t, vector<double>, size_t>
-    Footballer;
 
-wstring trim(wstring orig) {
+string trim(string orig) {
     size_t i=0, j=orig.size()-1;
-    while (orig[i] == L' ' || orig[i] == L'\t') ++i;
-    while (orig[j] == L' ' || orig[j] == L'\t') --j;
+    while (orig[i] == ' ' || orig[i] == '\t') ++i;
+    while (orig[j] == ' ' || orig[j] == '\t') --j;
     return orig.substr(i, j-i + 1);
 }
 
@@ -60,54 +60,80 @@ public:
     using vector::end;
 
     Team (const string& file_name) {
-        wifstream flist{file_name};
+        ifstream flist;
+        flist.open(file_name);
         if (!flist.is_open())
-            throw domain_error{"Ti eblan?"};
+            throw domain_error{"Check filepath"};
         size_t count=0;
+        char buff[1024];
 
         while (!flist.eof()) {
-            wchar_t buff[1024];
+            if (flist.peek() == '#') {
+                flist.getline(buff, 1023);
+                continue;
+            }
 
-            flist.getline(buff, 1023, L';');
+            flist.getline(buff, 1023, ';');
+            if (trim(buff).size() < 1) break;
             int n = stoi(buff);
 
-            flist.getline(buff, 1023, L';');
-            wstring name = trim(buff);
+            flist.getline(buff, 1023, ';');
+            string name = trim(buff);
 
-            flist.getline(buff, 1023, L';');
+            flist.getline(buff, 1023, ';');
             int way = stoi(buff);
 
-            flist.getline(buff, 1023, L';');
+            flist.getline(buff, 1023, ';');
             double time = stod(buff);
 
-            flist.getline(buff, 1023, L';');
+            flist.getline(buff, 1023, ';');
             size_t goals_size = stoull(buff);
             vector<double> goals;
-            goals.reserve(goals_size);
-            for (int i=0; i < goals_size; ++i) {
-                flist.getline(buff, 1023, L';');
+            if (goals_size) goals.resize(goals_size);
+
+            for (int i = 0; i < goals_size; ++i) {
+                flist.getline(buff, 1023, ';');
                 goals[i] = stod(buff);
             }
 
-            flist.getline(buff, 1023, L';');
+            flist.getline(buff, 1023, ';');
             size_t warns = stoull(buff);
+            flist.getline(buff, 1023, ';');
             emplace_back(n, name, way, time, goals_size, goals, warns);
+            ++count;
         }
 
         wcout << "Введено "<<count<< " Футболлеров\n";
 
     }
 
-    vector<Footballer> bench;
 };
 
 
+#include "paths.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <windows.h>
+
+using namespace std;
+
+#include <iostream>
+#include <windows.h>
+#include <sstream>
+#include <memory>
 
 int main() {
-    setlocale(0, "Russian");
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    // Установка кодовой страницы консоли Windows на UTF-8
+    SetConsoleOutputCP(65001); // CP_UTF8
+    SetConsoleCP(65001);
 
-    // wifstream file("12 Футболлеры.txt");
-    Team s("12 Футболлеры.txt");
+    Team team{ "C:/repos/user/CXX_projects/main_cmake/YaP/1st_course/12 Footballers.txt"};
+    for (auto& member : team) {
+        // auto [n, name, some, some1, some2, vec,some3] = member;
+        // cout << n << name << '\n';
+    }
+    cout << team.size();
+
+    return 0;
 }
