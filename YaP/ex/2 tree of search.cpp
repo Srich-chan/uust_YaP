@@ -1,3 +1,4 @@
+#include <cmath>
 #include <iostream>
 #include <fstream>
 
@@ -5,7 +6,7 @@ using namespace std;
 
 class Node {
 public:
-    double value;
+    double value=0.0;
     Node* left=nullptr;
     Node* right=nullptr;
 
@@ -45,17 +46,6 @@ public:
         return ld > rd? ld : rd;
     }
 
-    bool seek(double val) {
-        Node* h = this;
-        while (h) {
-            if (h->value == val) return true;
-            if (val < h->value) h = h->left;
-            else h = h->right;
-        }
-        return false;
-    }
-
-
     void print() {
         cout << "[";
         print_rec();
@@ -86,18 +76,96 @@ public:
         return copy;
     }
 
-    void print_layer(size_t layer) {
-        print_layer_rec(0, layer, this);
+    void print_tree(const bool cringe = false) {
+        size_t d = deepness();
+        for (size_t l=0; l < d; ++l) {
+            if (cringe) {
+                for (int i=0; i < d - l; ++i) cout << "\t";
+                if (l % 2 == 0) cout << "\b\b\b\b";
+            }
+            print_layer(l);
+        }
+    }
+
+    void print_layer(const size_t layer) {
+        cout << "Layer " << layer << ": ";
+        if (layer < deepness())
+            print_layer_rec(0, layer, this);
+        else
+            cout << " is empty";
+        cout << "\n";
+    }
+
+    Node* seek(double val) {
+        Node* h = this;
+        while (h) {
+            if (h->value == val) return h;
+            if (val < h->value) h = h->left;
+            else h = h->right;
+        }
+        return nullptr;
+    }
+
+
+    void remove(double val) {
+        delete retrieve(val);
     }
 
 
 private:
-    void print_layer_rec(size_t current, size_t target, Node* head) {
-        if (current == target) {
-            ;
+    Node* retrieve(double val, Node* parent=nullptr) {
+       if (val == value) {
+           if (parent) {
+               Node*& replace = value < parent->value? parent->left : parent->right;
+
+           }
+           return this;
+       }
+    }
+
+    Node* retrieve(Node* parent=nullptr) {
+
+    }
+
+    Node* seek_parent(double val) {
+        if (val == value) return nullptr;
+        Node* h = this;
+        while (h) {
+            if (h->is_child_have(val))
+                return h;
+            if (val < h->value)
+                h = h->left;
+            else
+                h = h->right;
+        }
+        return nullptr;
+    }
+
+    bool is_child_have(double val) {
+        return val == left->value || val == right->value;
+    }
+
+    void print_layer_rec(const size_t current, const size_t target, Node* head) {
+        if (current == target)
+            cout << "" << head->value << " ";
+        else {
+            if (head->left) print_layer_rec(current + 1, target, head->left);
+            else print_layer_NULL_rec(target - current - 1);
+
+            if (head->right) print_layer_rec(current + 1, target, head->right);
+            else print_layer_NULL_rec(target - current - 1);
         }
     }
 
+    void print_layer_NULL_rec(const size_t count) {
+        size_t pupu=1;
+        for (int i=0; i < count; ++i)
+            pupu *= 2;
+
+        for (size_t i=0; i < pupu; ++i) {
+            cout << ". ";
+        }
+    }
 
     void print_rec() {
         if (left) left->print_rec();
@@ -106,12 +174,29 @@ private:
     }
 };
 
-auto f = Node::delete_tree;
 
 class STree{
     size_t _size=0;
+
+
+    Node* retrieve(double val) {
+        ;
+    }
+
+    Node* seek_parent(double val, bool& is_left) { //TODO
+        if (val == root->value) return nullptr;
+        Node* h = root;
+        while (h) {
+            if (h->value == val) return h;
+            if (val < h->value) h = h->left;
+            else h = h->right;
+        }
+        return nullptr;
+    }
 public:
     Node* root=nullptr;
+
+    STree() = default;
     explicit STree(double val) {
         root = new Node{val};
         _size = 1;
@@ -120,13 +205,6 @@ public:
     ~STree() {
         root->delete_tree();
     }
-
-    // void chain_left(Node* par=nullptr) {
-    //     if (!par) par = root;
-    //     if (par->left) {
-    //
-    //     }
-    // }
 
     Node* insert(double val) {
         ++_size;
@@ -143,14 +221,15 @@ private:
 
 
 string BOOL(bool cond) {
-    return {cond?
-        "true" : "false"};
+    return {cond? "true" : "false"};
 }
 
 
-// #include <random>
+#include <random>
 int main () {
     STree t{123};
+    Node*& root = t.root;
+
     t.insert(10);
     t.insert(9);
     t.insert(11);
@@ -158,11 +237,22 @@ int main () {
     t.insert(1000);
     t.insert(1001);
     t.insert(999);
-    t.insert(12313);
+    t.insert(900);
 
-    auto root = t.root;
-    // cout << root->deepness();
-    root->print();
+    // mt19937 rand(root->value);
+    // for (int i=0; i < 10; ++i) {
+    //     t.insert(static_cast<double>(rand() % 200) - 100);
+    //     // t.insert((static_cast<double>(rand() % 2000) - 1000) / 10);
+    // }
 
-    cin.get();
+    cout << "ROOT:\n";
+    root->print_tree();
+
+    cout << "\nLEFT:\n";
+    root->left->print_tree();
+
+    cout << "\nRIGHT:\n";
+    root->right->print_tree();
+    
+    // cin.get();
 }
