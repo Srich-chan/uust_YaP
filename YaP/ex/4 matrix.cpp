@@ -96,7 +96,7 @@ public:
         if (empty()) throw domain_error {"Matrix is empty, sir!"};
         at(0).arrange_from(start, step);
         for (size_t i=1; i < M(); ++i) {
-            at(i).arrange_from(at(i-1)[N()-1], step);
+            at(i).arrange_from(at(i-1)[N()-1] + step, step);
         }
     }
 
@@ -193,8 +193,8 @@ int main() {
     SetConsoleOutputCP(1251);
 
     auto A = Matrix(10, 10);
-    A.arrange_from(123, 0.12);
-    A.print();
+    A.arrange_from();
+    A.print(2);
     A.print_size();
 
     A.reform(5, 5);
