@@ -49,19 +49,20 @@ public:
         return a;
     }
 
-    Node* insert(Node* node) {
+    void insert(Node* node) {
         if (node->value == value) {
             if (node != this)
                 throw domain_error{"insert node: There are should not be copies"};
             cerr << "\ninsert(node->value=" << value << ")\nThere are should not be duplicats! No mne pohuy\n";
-            return this;
+            return;
         }
         const bool ind = value < node->value;
         Node*& a = at(ind);
-        if (a) return a->insert(node);
-        a = node;
-        rotate();
-        return a;
+        if (a) {
+            a->insert(node);
+            rotate();
+        } 
+        else a = node;
     }
 
     size_t size() {
