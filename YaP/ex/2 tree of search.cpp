@@ -243,8 +243,8 @@ public:
     void rotate() {
         if (size() < 3) return;
         // cout << " rotating " << value << "...\n";
-        long double diff_left = double(left->size()) - double(right->size());
         // print_info("ROTATE START");
+        long double diff_left = double(left->size()) - double(right->size());
 
         while (2 <= diff_left) {
             Node* m = retrieve();
@@ -319,10 +319,10 @@ public:
 };
 
 int main () {
-    mt19937 lol{1000};
+    mt19937 rand{1000};
     vector<double> els = {};
-    for (int i=0; i < 100; ++i) {
-        els.push_back(double(lol() % 2000) - 1000);
+    for (int i=0; i < 10; ++i) {
+        els.push_back(double(rand() % 2000) - 1000);
     }
 
     BinaryTree t{els};

@@ -66,7 +66,6 @@ public:
             throw domain_error{"Check filepath"};
         size_t count=0;
         char buff[1024];
-
         while (!flist.eof()) {
             if (flist.peek() == '#') {
                 flist.getline(buff, 1023);
@@ -74,31 +73,39 @@ public:
             }
 
             flist.getline(buff, 1023, ';');
-            if (trim(buff).size() < 1) break;
+            cout << buff << '\n';
+            if (trim(buff).empty()) throw runtime_error{"Check the file"};
             int n = stoi(buff);
 
             flist.getline(buff, 1023, ';');
+            cout << buff << '\n';
             string name = trim(buff);
 
             flist.getline(buff, 1023, ';');
+            cout << buff << '\n';
             int way = stoi(buff);
 
             flist.getline(buff, 1023, ';');
+            cout << buff << '\n';
             double time = stod(buff);
 
             flist.getline(buff, 1023, ';');
+            cout << buff << ' ';
             size_t goals_size = stoull(buff);
+            cout << goals_size << '\n';
             vector<double> goals;
             if (goals_size) goals.resize(goals_size);
 
-            for (int i = 0; i < goals_size; ++i) {
+            for (size_t i = 0; i < goals_size; ++i) {
                 flist.getline(buff, 1023, ';');
+                cout << buff << "+++" << "\n";
                 goals[i] = stod(buff);
             }
 
             flist.getline(buff, 1023, ';');
+            cout << buff << '\n';
             size_t warns = stoull(buff);
-            flist.getline(buff, 1023, ';');
+            cout << "\n----------------\n";
             emplace_back(n, name, way, time, goals_size, goals, warns);
             ++count;
         }
