@@ -3,26 +3,7 @@ project(main_cmake)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(
-        main
-        #        YaP/ya_olimp.cpp
-#        YaP/lecture/main.cpp
-        "YaP/1st_course/1.cpp"
-        "YaP/ex/4 matrix.cpp"
-        #        "YaP/1st_course/2.cpp"
-#        "YaP/1st_course/_2.cpp"
-#        "YaP/1st_course/3.cpp"
-#        "YaP/1st_course/4.cpp"
-#        "YaP/1st_course/5.cpp"
-#        "YaP/1st_course/6.cpp"
-#        YaP/lecture/llu_overflow.cpp
-#        "YaP/1st_course/7.cpp"
-#        "YaP/1st_course/_7#.cpp"
-#        "YaP/1st_course/8.cpp
-#        "YaP/1st_course/9.cpp"
-#        "YaP/1st_course/10.cpp"
-        #        "YaP/1st_course/11.cpp"
-
+add_executable(uust_1 "YaP/1st_course/1.cpp"
 )
 
 add_executable(uust_12 YaP/1st_course/12.cpp)
@@ -34,4 +15,4 @@ add_executable(exam_1 "YaP/ex/1 tree.cpp")
 add_executable(exam_2 "YaP/ex/2 tree of search.cpp")
 add_executable(exam_3 "YaP/ex/3 wtf.cpp")
 add_executable(exam_4 "YaP/ex/4 matrix.cpp")
-add_executable(exam_2Alt "YaP/ex/2 BinaryTree.cpp")
+add_executable(exam_2Alt "YaP/ex/2 tree of search.cpp")
