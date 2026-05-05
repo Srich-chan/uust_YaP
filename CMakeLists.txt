@@ -3,9 +3,7 @@ project(main_cmake)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(uust_1 "YaP/1st_course/1.cpp"
-)
-
+add_executable(uust_1 YaP/1st_course/1.cpp)
 add_executable(uust_12 YaP/1st_course/12.cpp)
 add_executable(uust_13 YaP/1st_course/13.cpp)
 add_executable(uust_19 YaP/1st_course/19.cpp)
