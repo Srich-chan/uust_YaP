@@ -66,13 +66,17 @@ public:
     }
 
     size_t size() {
-        if (!this){
-            return 0;
-        }
-        size_t c = 1;
-        if (left) c += left->size();
-        if (right) c += right->size();
+        size_t c = 0;
+        this->_size_rec(c);
         return c;
+    }
+
+    void _size_rec(size_t& c) {
+        if (this) {
+            ++c;
+            if (left) left->_size_rec(c);
+            if (right) right->_size_rec(c);
+        }
     }
 
     size_t max_depth() {
