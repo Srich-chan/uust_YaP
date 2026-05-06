@@ -150,12 +150,9 @@ public:
     }
 };
 
-
-
 int main() {
     std::mt19937 gen(123);
     tree VELIKOE_DREVO(gen);
-
     cout << "Leaves: " << VELIKOE_DREVO.root->count_leaves();
     cout << "\nTotal Size: " << VELIKOE_DREVO.root->tree_size();
 }
