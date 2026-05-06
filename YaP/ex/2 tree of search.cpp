@@ -6,24 +6,24 @@
 
 using namespace std;
 
-class Node {
+class Branch {
 public:
     double value=0.0;
-    Node* left=nullptr;
-    Node* right=nullptr;
+    Branch* left=nullptr;
+    Branch* right=nullptr;
 
-    Node*& at(const bool& ind) {
+    Branch*& at(const bool& ind) {
         if (ind) return right;
         return left;
     }
 
-    Node* max() {
-        Node* M = this;
+    Branch* max() {
+        Branch* M = this;
         while (M->right) M = M->right;
         return M;
     }
-    Node* min() {
-        Node* m = this;
+    Branch* min() {
+        Branch* m = this;
         while (m->left) m = m->left;
         return m;
     }
@@ -35,21 +35,21 @@ public:
         return max()->value;
     }
 
-    Node* insert(const double& val) {
+    Branch* insert(const double& val) {
         if (val == value) return this;
 
         const bool ind = value < val;
-        Node*& a = at(ind);
+        Branch*& a = at(ind);
         if (a) {
-            Node* b = a->insert(val);
+            Branch* b = a->insert(val);
             rotate();
             return b;
         }
-        a = new Node{val};
+        a = new Branch{val};
         return a;
     }
 
-    void insert(Node* node) {
+    void insert(Branch* node) {
         if (node->value == value) {
             if (node != this)
                 throw domain_error{"insert node: There are should not be copies"};
@@ -57,7 +57,7 @@ public:
             return;
         }
         const bool ind = value < node->value;
-        Node*& a = at(ind);
+        Branch*& a = at(ind);
         if (a) {
             a->insert(node);
             rotate();
@@ -136,13 +136,9 @@ public:
         cout << "\n";
     }
 
-    void print_tree(const bool cringe = false) {
+    void print_tree() {
         size_t d = max_depth();
         for (size_t l=0; l < d; ++l) {
-            if (cringe) {
-                for (int i=0; i < d - l; ++i) cout << "\t";
-                if (l % 2 == 0) cout << "\b\b\b\b";
-            }
             print_layer(l);
         }
     }
@@ -160,8 +156,8 @@ public:
         cout << "\n";
     }
 
-    Node* seek(double val) {
-        Node* h = this;
+    Branch* seek(double val) {
+        Branch* h = this;
         while (h) {
             if (h->value == val) return h;
             if (val < h->value) h = h->left;
@@ -188,11 +184,11 @@ public:
     //     return s->retrieve();
     // }
 
-    Node* retrieve() {
+    Branch* retrieve() {
         // cout << "Trying to retrieve " << value << "...\n";
         if (!left && !right)
             throw logic_error{"Cannot retrieve from a leaf!"};
-        Node* to_delete;
+        Branch* to_delete;
         if (!right ^ !left) {
             to_delete = retrieve_crit(!!right);
         } else {
@@ -203,11 +199,12 @@ public:
         return to_delete;
     }
 
-    Node* retrieve(Node* parent) {
+    // Передаю родителя т.к. this константный указатель
+    Branch* retrieve(Branch* parent) {
         // cout << "trying to retrieve " << value << " with parent " << parent->value << "...\n";
         if (value == parent->value) throw domain_error{"Useless Error"};
         const bool is_right = parent->value < value;
-        Node*& parat = parent->at(is_right);
+        Branch*& parat = parent->at(is_right);
         if (is_leaf()) {
             parat = nullptr;
         } if (!right) {
@@ -223,10 +220,10 @@ public:
         return this;
     }
 
-    Node* retrieve_crit(const bool& ind) {
-        Node* par = at(ind);
+    Branch* retrieve_crit(const bool& ind) {
+        Branch* par = at(ind);
         // cout << "Calling retrieve_crit("<<ind<<") \n";
-        if (!par) return retrieve();
+        if (!par) return this->retrieve();
         if (!par->at(!ind)) return par->retrieve(this);
         // cout << "( - .-) Retrieving "<< (ind?"right":"left") <<" crit from ("<< par->value <<") for " << value << "...\n";
 
@@ -234,7 +231,7 @@ public:
             par = par->at(!ind);
         }
 
-        Node* res = par->at(!ind)->retrieve(par);
+        Branch* res = par->at(!ind)->retrieve(par);
         // cout << "( + _ + )7 Retreaved "<< (ind?"right":"left") <<" crit ("<< res->value <<") for " << par->value <<"!\n";
         return res;
     }
@@ -247,7 +244,7 @@ public:
         long double diff_left = double(left->size()) - double(right->size());
 
         while (2 <= diff_left) {
-            Node* m = retrieve();
+            Branch* m = retrieve();
             if (right) right->insert(m);
             else right = m;
             // print_info("ROTATE TO RIGHT");
@@ -256,7 +253,7 @@ public:
             // cout << " --> " << diff_left << "\n";
         }
         while (diff_left <= -2) {
-            Node* m = retrieve();
+            Branch* m = retrieve();
             if (left) left->insert(m);
             else left = m;
             // print_info("ROTATE TO LEFT");
@@ -268,7 +265,7 @@ public:
         left->rotate();
     }
 
-    void print_layer_rec(const size_t current, const size_t target, Node* head) {
+    void print_layer_rec(const size_t current, const size_t target, Branch* head) {
         if (current == target)
             cout << "" << head->value << " ";
         else {
@@ -299,15 +296,15 @@ public:
 
 class BinaryTree{
 public:
-    Node* root=nullptr;
+    Branch* root=nullptr;
 
     BinaryTree() = default;
     explicit BinaryTree(double val) {
-        root = new Node{val};
+        root = new Branch{val};
     }
     explicit BinaryTree(vector<double>& els) {
         if (els.empty()) throw length_error{"to small"};
-        if (!root) root = new Node{};
+        root = new Branch{};
         root->value = els[0];
         for (size_t i=1; i < els.size(); ++i) {
             root->insert(els[i]);
@@ -326,7 +323,7 @@ int main () {
     }
 
     BinaryTree t{els};
-    Node*& root = t.root;
+    Branch*& root = t.root;
 
     root->print_info();
     root->print_list(p_PROJECT "../ex/2 out.txt");

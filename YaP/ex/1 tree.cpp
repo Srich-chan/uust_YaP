@@ -9,6 +9,15 @@ class tree{
 public:
 
     class branch {
+    public:
+        branch* add_child(int value=10) {
+            if (child == nullptr) {
+                child = new branch{this};
+                child->_value = value;
+                return child;
+            }
+            return child->add_sibling(value);
+        }
         branch* add_sibling(int value=228) {
             branch* head = this;
             while (head->next_sibling != nullptr) {
@@ -22,51 +31,47 @@ public:
             return sib;
         }
 
-        size_t count_with_siblings() {
+        void _tree_size_rec(size_t& c) {
+            ++c;
+            if (this->child)
+                child->_tree_size_rec(c);
+            if (this->next_sibling)
+                next_sibling->_tree_size_rec(c);
+        }
+
+        void _count_leaves_rec(size_t& c) {
+            c += !this->child;
+            if (child)
+                child->_count_leaves_rec(c);
+
+            if (next_sibling)
+                next_sibling->_count_leaves_rec(c);
+        }
+
+
+
+        size_t tree_size() {
+            if (!this->child) return 1;
             size_t c = 1;
-            if (child != nullptr) c += child->count_with_siblings();
-            if (next_sibling != nullptr) c += next_sibling->count_with_siblings();
+            _tree_size_rec(c);
             return c;
         }
 
-        size_t count_leaves_rec() {
-            /*
-             Иди нахуй Луценко
-             */
-            size_t rec_count = !child;
-            if (child)
-                rec_count += child->count_leaves_rec();
-            if (next_sibling)
-                rec_count += next_sibling->count_leaves_rec();
-            return rec_count;
-        }
-    public:
-
-        branch* add_child(int value=10) {
-            if (child == nullptr) {
-                child = new branch{this};
-                child->_value = value;
-                return child;
-            }
-            return child->add_sibling(value);
-        }
-
-        size_t tree_size() {
-            if (child) return 1 + child->count_with_siblings();
-            return 1;
-        }
-
         size_t count_leaves() {
-            if (child) return child->count_leaves_rec();
-            return 1;
+            if (!this->child) return 1;
+            size_t c = 0;
+            _count_leaves_rec(c);
+            return c;
         }
 
+
+        // Cчитает кол-во детей, но не внуков;
         size_t count_childs() {
             if (!child) return 0;
 
             branch* head = child;
             size_t c = 1;
-            while (head->next_sibling != nullptr) {
+            while (head->next_sibling) {
                 head = head->next_sibling;
                 ++c;
             }

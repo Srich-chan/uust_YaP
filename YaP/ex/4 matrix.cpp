@@ -63,8 +63,9 @@ public:
     string str(int precision=0) {
         ostringstream oss;
         const row& vec = *this;
+        oss.precision(precision);
+        oss << fixed; // Чёрная магия C++
 
-        oss << fixed << setprecision(precision); // Не ясная чёрная магия C++
 
         oss << "[" << vec[0];
         for (size_t i = 1; i < size(); ++i) {
@@ -134,7 +135,7 @@ public:
     }
 
     void insert_row(row r, size_t ins=-1) {
-        if (!empty()) r.resize(N());
+        if (!this->empty()) r.resize(N());
         if (ins >= M())
             push_back(r);
         else
@@ -145,7 +146,6 @@ public:
         c.resize(M());
         for (size_t i=0; i < M();++i)
             (*this)[i].insert_item(c[i], ins);
-
     }
 
     size_t M() {
@@ -193,7 +193,7 @@ int main() {
     SetConsoleOutputCP(1251);
 
     auto A = Matrix(10, 10);
-    A.arrange_from();
+    A.arrange_from(1, 2);
     A.print(2);
     A.print_size();
 
@@ -205,7 +205,7 @@ int main() {
     A.print();
     A.print_size();
 
-    A.insert_column({8, 800, 555, 35, 35, 228, 67, 666, 123}, 2);
+    A.insert_column(row{8, 800, 555, 35, 35, 228, 67, 666, 123}, 2);
 
     A.print();
     A.print_size();
