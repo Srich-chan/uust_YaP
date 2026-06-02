@@ -1,158 +1,183 @@
 ﻿#include <iostream>
-#include <random>
+#include <vector>
+#include <memory>
+#include <queue>
+#include <stack>
 
+using std::vector, std::cout, std::stack, std::queue;
 
-using namespace std;
-
-
-class tree{
-public:
-
-    class branch {
+class Branch {
     public:
-        branch* add_child(int value=10) {
-            if (child == nullptr) {
-                child = new branch{this};
-                child->_value = value;
-                return child;
+    vector<Branch*> kids;
+    double val = 67;
+    Branch(double puk=67) {
+        val = puk;
+    }
+
+    Branch& operator[](size_t ind) {
+        return *kids[ind];
+    }
+    Branch*& at(size_t ind) {
+        return kids[ind];
+    }
+    void kill_all() {
+        for (auto kid : kids) {
+            delete kid;
+        }
+    }
+
+    void add_kid(double value=67) {
+        add_kid(new Branch(value));
+    }
+    void add_kid(Branch* kid) {
+        kids.push_back(kid);
+    }
+
+    [[nodiscard]] size_t max_depth() const {
+        if (is_leaf()) return 1;
+
+        std::queue<const Branch*> q;
+        q.push(this);
+
+        size_t depth = 0;
+        while (!q.empty()) {
+            ++depth;
+            size_t level = q.size();
+
+            for (size_t i = 0; i < level; ++i) {
+                const Branch* curr = q.front();
+                q.pop();
+                for (const Branch* kid : curr->kids) {
+                    q.push(kid);
+                }
             }
-            return child->add_sibling(value);
         }
-        branch* add_sibling(int value=228) {
-            branch* head = this;
-            while (head->next_sibling != nullptr) {
-                head = head->next_sibling;
-            }
-            branch*& sib = head->next_sibling;
-            sib = new branch{head->parent};
-            sib->prev_sibling = head;
-            sib->_value = value;
+        return depth;
+    }
 
-            return sib;
-        }
-
-        void _tree_size_rec(size_t& c) {
-            ++c;
-            if (this->child)
-                child->_tree_size_rec(c);
-            if (this->next_sibling)
-                next_sibling->_tree_size_rec(c);
-        }
-
-        void _count_leaves_rec(size_t& c) {
-            c += !this->child;
-            if (child)
-                child->_count_leaves_rec(c);
-
-            if (next_sibling)
-                next_sibling->_count_leaves_rec(c);
-        }
-
-
-
-        size_t tree_size() {
-            if (!this->child) return 1;
-            size_t c = 1;
-            _tree_size_rec(c);
-            return c;
-        }
-
-        size_t count_leaves() {
-            if (!this->child) return 1;
-            size_t c = 0;
-            _count_leaves_rec(c);
-            return c;
-        }
-
-
-        // Cчитает кол-во детей, но не внуков;
-        size_t count_childs() {
-            if (!child) return 0;
-
-            branch* head = child;
-            size_t c = 1;
-            while (head->next_sibling) {
-                head = head->next_sibling;
+    [[nodiscard]] size_t tree_size() const {
+        if (is_leaf()) return 1;
+        size_t c=1;
+        stack<const Branch*> ds;
+        ds.push(this);
+        while (!ds.empty()) {
+            const Branch* curr = ds.top(); ds.pop();
+            for (Branch* kid : curr->kids) {
+                ds.push(kid);
                 ++c;
             }
-            return c;
         }
-
-        branch* operator[](size_t ind) {
-            if (!child) throw std::domain_error{"puk"};
-            if (ind >= count_childs()) throw std::domain_error{"srenk"};
-            branch* head=child;
-            for (size_t i=1; i < ind; ++i) {
-                head = head->next_sibling;
-            }
-            return head;
-        }
-
-        branch* parent=nullptr;
-        branch* child=nullptr;
-        branch* prev_sibling=nullptr;
-        branch* next_sibling=nullptr;
-
-        int _value=67;
-
-        ~branch() {
-            delete child;
-            delete next_sibling;
-        }
-    };
-
-    branch* root;
-    // Пустое древо
-    tree() {
-        root = new branch();
-    }
-    // Дерево созданное броском кубика, где есть хотя бы 10 веток-узлов
-    tree(std::mt19937 rand) {
-        enum actions {
-            new_child,
-            mov_up,
-            mov_down,
-            finish
-        };
-        root = new branch();
-        branch* head = root->add_child(rand() % 666);
-        size_t c = 1;
-
-        bool puk = true;
-        while (puk) {
-            switch (rand() % (finish + 1)) {
-                case new_child:
-                    head->add_child();
-                    ++c;
-                    break;
-
-                case mov_up:
-                    if (head->parent != root)
-                        head = head->parent;
-                    break;
-
-                case mov_down:
-                    if (head->child) head = (*head)[rand() % head->count_childs()];
-                    break;
-
-                case finish:
-                    if (c > 10) puk = false;
-                    break;
-
-                default:
-                    throw std::domain_error("wtf");
-            }
-        }
+        return c;
     }
 
-    ~tree() {
-        delete root;
+    [[nodiscard]] size_t count_leaves() const {
+        if (is_leaf()) return 1;
+        size_t c = 0;
+        stack<const Branch*> ds;
+        ds.push(this);
+        while (!ds.empty()) {
+            const Branch* curr = ds.top();
+            ds.pop();
+
+            for (Branch* kid : curr->kids) {
+                if (kid->is_leaf()) ++c;
+                else {
+                    ds.push(kid);
+                }
+            }
+        }
+        return c;
+    }
+
+    [[nodiscard]] bool is_leaf() const {
+        return kids.empty();
+    }
+
+    void print_layer(size_t ind) const {
+        cout << "Layer " << ind << ": ";
+
+        if (ind == 0) {
+            cout  << "root=" << val<< '\n';
+            return;
+        }
+        if (ind >= max_depth()) {
+            cout << "is Empty\n"; return;
+        }
+        if (ind == 1) {
+            cout << "[" << kids[0]->val;
+            for (size_t i=1; i < kids.size(); ++i) {
+                cout << ", " << kids[i]->val;
+            }
+            cout << "]\n";
+            return;
+        }
+        size_t curr_depth=1;
+        queue<const Branch*> q;
+        q.push(this);
+        while (!q.empty() && curr_depth < ind) {
+            ++curr_depth;
+            size_t layer = q.size();
+            for (size_t _i=0; _i < layer; ++_i) {
+                const Branch* curr = q.front();
+                q.pop();
+
+                for (Branch* kid : curr->kids) {
+                    if (kid) q.push(kid);
+                }
+            }
+        }
+        size_t layer=q.size();
+        for (size_t _i=0; _i < layer; ++_i) {
+            const Branch* curr = q.front();
+            q.pop();
+            cout << "[";
+            if (!curr->kids.empty()) cout << curr->kids[0]->val;
+            for (size_t i=1; i < curr->kids.size(); ++i) {
+                cout << ", " << curr->kids[i]->val;
+            }
+            cout << "] ";
+        }
+        cout << "\n";
+    }
+    void print_info(const char* name=nullptr) {
+        cout << "\n";
+        if (name) cout << name << "\n";
+        cout << "Size: " << tree_size() << "\n"
+        << "Leaves: " << count_leaves() << "\n";
+        for (size_t i =0; i <= max_depth(); ++i) {
+            print_layer(i);
+        }
+    }
+
+};
+
+class Tree : public Branch{
+public:
+
+    ~Tree() {
+        kill_all();
     }
 };
 
 int main() {
-    std::mt19937 gen(123);
-    tree VELIKOE_DREVO(gen);
-    cout << "Leaves: " << VELIKOE_DREVO.root->count_leaves();
-    cout << "\nTotal Size: " << VELIKOE_DREVO.root->tree_size();
+
+    Tree root;
+    root.add_kid(123);
+    root[0].add_kid(2);
+    root[0].add_kid(12341);
+    // root[0][0].add_kid(3);
+
+    root.add_kid(0.);
+    root[1].add_kid(123);
+    root[1][0].add_kid(4);
+    root[1][0][0].add_kid(5);
+    root[1][0][0][0].add_kid(6);
+    root.add_kid(123);
+
+    cout << "Size: " << root.tree_size() << "\n";
+
+    Tree* ptr = &root;
+    cout << "Leaves: " << ptr->count_leaves() << "\n";
+
+    ptr->print_info("Krutoe Derevo");
 }
