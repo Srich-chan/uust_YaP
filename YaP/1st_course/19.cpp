@@ -2,102 +2,78 @@
 #include <fstream>
 #include <locale>
 #include <random>
-#include <vector>
+#include <set>
 #include <windows.h>
+#include "paths.h"
+#include <algorithm>
 
 
-
-//TODO: Переделать нахуй
 using namespace std;
 
-vector<int> primes;
-
-struct diap {
-private:
-    // Генератор
-    // mt19937 rand{1531};
+class Shit : public logic_error {
 public:
-    int k; // от
-    int n; // до
-    int min_prime;
-    int max_prime;
-    int m;
-    int p;
-    vector<int> result;
-
-    diap (int a, int b, int mn, int pn)
-    : k{a}, n{b} {
-        min_prime = abs(a) < 2? 2 : a;
-        max_prime = abs(b);
-        primes[0];
-        while (!is_prime(min_prime)) ++min_prime;
-        while (!is_prime(max_prime)) --max_prime;
-        while (primes.back() < max_prime) {
-            primes.push_back(
-                get_prime_to_right(primes.back())
-            );
-        }
-
-
-        for (int i=a; i <= b; ++i) {
-            if (i % m == 0 ^ i % p == 0)
-                result.push_back(i);
-        }
-    }
-
-    static bool is_prime(const int x) {
-        if (x < 2) return false;
-        int cur = 2;
-        while (x >= cur*cur) {
-            if (x % cur == 0) return false;
-            ++cur;
-        }
-        return true;
-    }
-
-    int get_prime_to_left(int normal) {
-        int i=normal-1;
-        while (!is_prime(i)) {
-            if (i <= min_prime) return min_prime;
-            --i;
-        }
-        return i;
-    }
-
-    int get_prime_to_right(int normal) {
-        int i=normal+1;
-        while (!is_prime(i)) {
-            if (i >= max_prime) return max_prime;
-            ++i;
-        }
-        return i;
-    }
+    using logic_error::logic_error;
 };
-
-#include "paths.h"
 
 int main () {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(0, "Russian");
+    ifstream in(p_PROJECT "19 tests.txt");
 
-    ifstream tests{p_PROJECT "19 tests.txt"};
-    while (!tests.eof()) {
-        char buff[256];
-        tests.getline(buff, 256);
-        if (buff[0] == '#') continue; // # - пустая строка
+    if (!in.is_open())
+        throw Shit{"file isn't opened!"};
 
-        int k = strtol(buff, nullptr, 10);
-        int n = strtol(buff, nullptr, 10);
-        int w = strtol(buff, nullptr, 10);
-        int p = strtol(buff, nullptr, 10);
+    set<int> M;
+    set<int> P;
+    set<int> Result;
+    int c = 0;
+    char buff[129];
 
-        wcout << L"\n Введены: " << k << L" и " << n
-        << L" и " << w << L" и " << p << "\n";
+    while (!in.eof()) {
+        if (in.peek() == ' ')
+            in.getline(buff, 123123);
+        in.getline(buff, 128, ' ');
+        int k = stoi(buff);
+        in.getline(buff, 128);
+        int n = stoi(buff);
+        
+        in.getline(buff, 128, ' ');
+        int m = stoi(buff);
+        in.getline(buff, 128);
+        int p = stoi(buff);
 
-        diap diap(k, n, w?&w:nullptr , p?&p:nullptr);
-        for (auto& el : diap.result) {
-            wcout << el << " ";
+        wcout << L"Случай " << ++c << ":\n"
+        << "\tk = " << k << ", n = " << n << ",\n"
+        << "\tm = " << m << ", p = " << p << "\n"
+        << L"\nРезультат:\n";
+
+        for (int i = k; i <= n; ++i) {
+            if (i % m == 0)
+                M.insert(i);
+            if (i % p == 0)
+                P.insert(i);
         }
+
+        set_symmetric_difference(
+            M.begin(), M.end(),
+            P.begin(), P.end(),
+            inserter(Result, Result.begin())
+        );
+
+        cout << "{";
+        if (!Result.empty()) {
+            set<int>::iterator beg = Result.begin();
+            cout << *beg++;
+            while (beg != Result.end()) {
+                cout << ", " << *beg++;
+            }
+        }
+        cout << "}\n\n";
+
+        M.clear();
+        P.clear();
+        Result.clear();
     }
+    in.close();
 }

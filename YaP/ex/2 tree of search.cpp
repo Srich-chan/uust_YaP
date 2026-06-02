@@ -109,8 +109,8 @@ public:
         ostream& out = file_name? f : cout;
 
         out << "[";
-        print_list_rec(out);
-        out << "\b\b]\n";
+        print_list_rec(out, min()->value);
+        out << "]\n";
     }
 
     bool is_leaf() {
@@ -291,22 +291,23 @@ public:
         }
     }
 
-    void print_list_rec(ostream& out) {
-        if (left) left->print_list_rec(out);
-        out << value << ", ";
-        if (right) right->print_list_rec(out);
+    void print_list_rec(ostream& out, double min) {
+        if (left) left->print_list_rec(out, min);
+        if (value != min) out << ", ";
+        out << value;
+        if (right) right->print_list_rec(out, min);
     }
 };
 
-class BinaryTree{
+class SearchTree{
 public:
     Branch* root=nullptr;
 
-    BinaryTree() = default;
-    explicit BinaryTree(double val) {
+    SearchTree() = default;
+    explicit SearchTree(double val) {
         root = new Branch{val};
     }
-    explicit BinaryTree(vector<double>& els) {
+    explicit SearchTree(vector<double>& els) {
         if (els.empty()) throw length_error{"to small"};
         root = new Branch{};
         root->value = els[0];
@@ -314,22 +315,23 @@ public:
             root->insert(els[i]);
         }
     }
-    ~BinaryTree() {
+    ~SearchTree() {
         root->delete_tree();
     }
 };
 
 int main () {
-    mt19937 rand{1000};
-    vector<double> els = {};
+    mt19937 rand{67};
+
+    SearchTree t{};
+    Branch*& root = t.root;
     for (int i=0; i < 10; ++i) {
-        els.push_back(double(rand() % 2000) - 1000);
+        auto r = double(rand() % 200) - 100;
+        if (!root) root = new Branch{r};
+        else root->insert(r);
     }
 
-    BinaryTree t{els};
-    Branch*& root = t.root;
-
-    root->print_info();
+    root->print_info("ROOT");
     root->print_list(p_PROJECT "../ex/2 out.txt");
 
     return 0;

@@ -188,28 +188,31 @@ public:
 
 
 int main() {
-    setlocale(0, "Russian");
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
 
+    cout << "Создаём матрицу 10x10\n";
     auto A = Matrix(10, 10);
     A.arrange_from(1, 2);
     A.print(2);
     A.print_size();
 
+    cout << "Изменяем размер до 5x5\n";
     A.reform(5, 5);
     A.print();
     A.print_size();
 
-    A.insert_row({1123, 5234});
+    cout << "Добавляем в конец новую строку: {1123, 5234}\n";
+    A.insert_row(row{1123, 5234});
     A.print();
     A.print_size();
 
+    cout << "Добавляем в конец новый столбец: {8, 800, 555, 35, 35, 228, 67, 666, 123}\n";
     A.insert_column(row{8, 800, 555, 35, 35, 228, 67, 666, 123}, 2);
-
     A.print();
     A.print_size();
 
+    32
     Matrix B = A.sub_Matrix({2, 4}, {1, 3});
     B.print();
     B.print_size();

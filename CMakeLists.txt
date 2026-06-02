@@ -15,4 +15,5 @@ add_executable(exam_1 "YaP/ex/1 tree.cpp")
 add_executable(exam_2 "YaP/ex/2 tree of search.cpp")
 add_executable(exam_3 "YaP/ex/3 wtf.cpp")
 add_executable(exam_4 "YaP/ex/4 matrix.cpp")
-#add_executable(exam_2Alt "YaP/ex/2 tree of search.cpp")
+
+add_executable(main "Yap/lecture/main.cpp")
