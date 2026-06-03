@@ -46,12 +46,7 @@ public:
         ++size;
     }
 
-    // // ОБРАТНОЕ ИНДЕКСИРОВАНИЕ
-    // // list[0] == tail;
-    // // list[size - 1] == head;
-    // double operator[](size_t ind) {
-    // return ptr_at_reverse(ind)->value;
-    // }
+
     double operator[](size_t ind) {
         return ptr_at(ind)->value;
     }
@@ -139,21 +134,18 @@ public:
 };
 
 
-
-
-
 int main() {
-    list puk{1};
+    list test_list{1};
     for (int i=2; i < 20; ++i) {
-        puk.push(20);
+        test_list.push(20);
     }
-    puk.push(-123);
-    puk.push(-23);
-    puk.push(-4321);
-    puk.push(-1);
-    puk.print();
+    test_list.push(-123);
+    test_list.push(-23);
+    test_list.push(-4321);
+    test_list.push(-1);
+    test_list.print();
 
-    puk.TASK();
+    test_list.TASK();
 
-    puk.print();
+    test_list.print();
 }

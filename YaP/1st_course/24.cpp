@@ -104,12 +104,6 @@ pair<wstring, size_t> find_and_count(const wstring& str, const wstring& simbs) {
     return result;
 }
 
-
-void wpl(const wstring& str) {
-    wcout << str << '\n';
-}
-
-
 void to_lower(wstring& str) {
     for (wchar_t& c : str) {
         c = towlower(c);
@@ -137,7 +131,6 @@ wstring simbolize(const wstring& orig) {
 }
 
 int main () {
-
     wchar_t buff[buff_size];
     FILE_c file = FILE_c{wp_File};
     SetConsoleCP(1251);

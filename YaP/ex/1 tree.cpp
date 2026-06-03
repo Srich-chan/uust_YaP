@@ -153,7 +153,6 @@ class Branch {
 
 class Tree : public Branch{
 public:
-
     ~Tree() {
         kill_all();
     }
@@ -165,7 +164,7 @@ int main() {
     root.add_kid(123);
     root[0].add_kid(2);
     root[0].add_kid(12341);
-    // root[0][0].add_kid(3);
+    root[0][0].add_kid(3);
 
     root.add_kid(0.);
     root[1].add_kid(123);
@@ -174,10 +173,6 @@ int main() {
     root[1][0][0][0].add_kid(6);
     root.add_kid(123);
 
-    cout << "Size: " << root.tree_size() << "\n";
-
     Tree* ptr = &root;
-    cout << "Leaves: " << ptr->count_leaves() << "\n";
-
-    ptr->print_info("Krutoe Derevo");
+    ptr->print_info("SOME TREE");
 }
