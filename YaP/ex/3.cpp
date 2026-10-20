@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <windows.h>
 
 
 using namespace std;
@@ -28,12 +29,12 @@ public:
     node* tail=nullptr;
     size_t size=0;
 
+    list() = default;
     list(double val) {
         tail = new node{val};
         head = tail;
         ++size;
     }
-
 
     double operator[](size_t ind) {
         return ptr_at(ind)->value;
@@ -44,10 +45,9 @@ public:
         ++size;
     }
 
-
     void insert(double val, size_t ind) {
         if (ind > size)
-            throw domain_error{"Puk puken"};
+            throw domain_error{"PROBLEM"};
         if (ind == 0) {
             push(val);
             return;
@@ -77,7 +77,7 @@ public:
             h = h->next;
             ss << ", " << h->value;
         }
-        ss << "]";
+        ss << "] Size: " << size << "\n";
         return ss.str();
     }
 
@@ -95,12 +95,12 @@ public:
             }
             h = h->next;
         }
-        if (0 <= first_negative) return;
+        if (0 <= first_negative) // aka отрицательного нет
+            return;
+
 
         for (h = head; !!h->next; h = h->next) {
             if (h->next->value == 20) {
-                // h->value = first_negative;
-                // ИЛИ
                 insert(first_negative, h);
                 h = h->next;
             }
@@ -109,18 +109,65 @@ public:
 };
 
 
-int main() {
-    list test_list{1};
-    for (int i=2; i < 20; ++i) {
+void test(list& l) {
+    const static string line(120, '+');
+    static size_t case_count = 1;
+    cout << "Case " << case_count++ << "\n";
+
+    cout << "Before:\n";
+    l.print();
+
+    l.TASK();
+
+    cout << "After:\n";
+    l.print();
+    cout << line << "\n";
+}
+
+void legacy_case() {
+    list test_list;
+    for (int i=0; i < 20; ++i) {
         test_list.push(20);
     }
     test_list.push(-123);
     test_list.push(-23);
     test_list.push(-4321);
     test_list.push(-1);
-    test_list.print();
 
-    test_list.TASK();
+    test(test_list);
+}
 
-    test_list.print();
+void neutral_case() {
+    list l;
+    for (int i = 0; i < 10; ++i) {
+        l.push(9999);
+    }
+    test(l);
+}
+
+void without_twenty() {
+    list l;
+    for (int i = 0; i < 5; ++i) {
+        l.push(100);
+        l.push(-123);
+    }
+    test(l);
+}
+
+void with_twenty() {
+    list l;
+    for (int i = 0; i < 5; ++i) {
+        l.push(100);
+        l.push(-123);
+        l.push(20);
+    }
+    test(l);
+}
+
+
+
+int main() {
+    legacy_case();
+    neutral_case();
+    without_twenty();
 }

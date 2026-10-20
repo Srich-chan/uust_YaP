@@ -139,7 +139,7 @@ public:
 };
 
 
-List shitty_merge(const List &L1, const List &L2) {
+List diff(const List &L1, const List &L2) {
     List res;
 
     if (L1.size()) {
@@ -178,7 +178,7 @@ List gen_list(size_t size = 10, long unsigned _ceil = -1, bool neg = false, size
 
 
 void test(const List &L1, const List &L2) {
-    static const string line(100, '-');
+    static const string line(120, '+');
 
     static int case_count = 1;
     cout << "Case " << case_count++ << '\n';
@@ -189,7 +189,7 @@ void test(const List &L1, const List &L2) {
     cout << "L2 = ";
     L2.print_info();
     cout << "\nL = ";
-    shitty_merge(L1, L2).print_info();
+    diff(L1, L2).print_info();
 
     cout << line << '\n';
 }
@@ -259,7 +259,6 @@ void random_cases(int kolvo = 10) {
              gen_list(10, 10, 0));
     }
 }
-
 
 
 int main () {

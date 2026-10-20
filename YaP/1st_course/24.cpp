@@ -149,7 +149,5 @@ int main () {
             max = curr;
         }
     }
-    wcout << L"Результат для \"" <<simbs<< L"\" со счётом "<< max.second <<":\n\t"
-            << max.first;
+    wcout << L"\nРезультат для \"" <<simbs<< L"\" со счётом "<< max.second <<":\t" << max.first;
 }
-
