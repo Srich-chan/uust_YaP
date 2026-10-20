@@ -12,18 +12,6 @@ public:
 
 
 class list {
-    node* ptr_at_reverse(size_t ind) {
-        if (size == 0) throw std::domain_error{"sdf"};
-        if (ind >= size) throw std::domain_error{"www"};
-        if (!ind) return tail;
-        node* w = head;
-        while (size - ind > 1) {
-            w = w->next;
-            ++ind;
-        }
-        return w;
-    }
-
     node* ptr_at(size_t ind) {
         if (size == 0) throw std::domain_error{"sdf"};
         if (ind >= size) throw std::domain_error{"www"};
@@ -56,19 +44,6 @@ public:
         ++size;
     }
 
-    void insert_r(double val, size_t ind) {
-        if (ind >= size) {
-            push(val);
-        } else if (ind == 0) {
-            tail->next = new node{val};
-            ++size;
-        } else {
-            node* pr = ptr_at_reverse(ind);
-            node* t = pr->next;
-            pr->next = new node{val, t};
-            ++size;
-        }
-    }
 
     void insert(double val, size_t ind) {
         if (ind > size)
